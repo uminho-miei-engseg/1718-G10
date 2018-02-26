@@ -1,0 +1,1053 @@
+Inicialização
+Init components: bef0139e5e02fad0db1c0fedd3820a87b30f57b7deba8084cba18c1d6534385d.f7d06906dc8728b724fe6cd7dc024a366e4fd0a064f7f8ab6b0f321e7a70502e
+pRDashComponents: bef0139e5e02fad0db1c0fedd3820a87b30f57b7deba8084cba18c1d6534385d.3ec3614e1f83d2a5d41a489f6443a3a7f636e998d2f32c6245f22af3feb6d8a9
+u
+Ofuscação:
+
+user@CSI:~/Aulas/Aula3$ python generateBlindData-app.py
+Input
+Data: Vamos assinar esta mensagem sem o Bob a ver
+pRDash components: bef0139e5e02fad0db1c0fedd3820a87b30f57b7deba8084cba18c1d6534385d.f7d06906dc8728b724fe6cd7dc024a366e4fd0a064f7f8ab6b0f321e7a70502e
+Output
+Blind message: 7a613d92c7c3780ddab0a27e106e6c1a78c510440c3dbfad32989e1a796c5047
+Blind components: 9e7814b5650188ac2c9e4fcbae544adb3a542c4c490ae6587e106f112647e4bf.6a81fd843563f0b1c97cb4c3e65529abb7bc153edd1a4fcc1f6ce81f64008add
+pRComponents: 6a81fd843563f0b1c97cb4c3e65529abb7bc153edd1a4fcc1f6ce81f64008add.e98ddfef9dc4fe4a2f70a18d8170b94777a058229e7396d63c6aa966db50c912
+
+Assinatura:
+
+user@CSI:~/Aulas/Aula3$ python generateBlindSignature-app.py key.pem
+Input
+Passphrase: 
+Blind message: 7a613d92c7c3780ddab0a27e106e6c1a78c510440c3dbfad32989e1a796c5047
+Init components: bef0139e5e02fad0db1c0fedd3820a87b30f57b7deba8084cba18c1d6534385d.f7d06906dc8728b724fe6cd7dc024a366e4fd0a064f7f8ab6b0f321e7a70502e
+Output
+Blind signature: 11990d8736d63b35dfcb8a598aac26abda8d69361477ac0eaacd3b4c2b674e050f5f20f422922f965430fb68f66526399264fbf8096a275f39425b44efded86c
+
+Desofuscação:
+
+user@CSI:~/Aulas/Aula3$ python unblindSignature-app.py
+Input
+Blind signature: 11990d8736d63b35dfcb8a598aac26abda8d69361477ac0eaacd3b4c2b674e050f5f20f422922f965430fb68f66526399264fbf8096a275f39425b44efded86c
+Blind components: 9e7814b5650188ac2c9e4fcbae544adb3a542c4c490ae6587e106f112647e4bf.6a81fd843563f0b1c97cb4c3e65529abb7bc153edd1a4fcc1f6ce81f64008add
+pRDash components: bef0139e5e02fad0db1c0fedd3820a87b30f57b7deba8084cba18c1d6534385d.f7d06906dc8728b724fe6cd7dc024a366e4fd0a064f7f8ab6b0f321e7a70502e
+Output
+Signature: 45a437f48fd9934a957a40db10cf1c95cd64cefdc99266a544ea52c0bd33403
+
+Verificação:
+
+user@CSI:~/Aulas/Aula3$ python verifySigature-app.py key.crt
+Input
+Original data: vamos assinar esta mensagem sem o Bob a ver
+Signature:
+
+
+3. Protocolo SSH
+
+Para este ponto necessita de instalar o ssh-audit na conta do utilizador user na máquina virtual. Sugere-se que efetue a seguinte sequência de comandos:
+
+
+lenovo-user@lenovouser:~$ python ssh-audit.py algo.paranoidjasmine.com
+python: can't open file 'ssh-audit.py': [Errno 2] No such file or directory
+lenovo-user@lenovouser:~$ sudo python ssh-audit.py algo.paranoidjasmine.com
+[sudo] password for lenovo-user: 
+Sorry, try again.
+[sudo] password for lenovo-user: 
+Sorry, try again.
+[sudo] password for lenovo-user: 
+sudo: 3 incorrect password attempts
+lenovo-user@lenovouser:~$ clear
+
+lenovo-user@lenovouser:~$ cd
+lenovo-user@lenovouser:~$ mkdir Tools
+mkdir: cannot create directory ‘Tools’: File exists
+lenovo-user@lenovouser:~$ cd Tools
+lenovo-user@lenovouser:~/Tools$ git clone https://github.com/arthepsy/ssh-audit
+fatal: destination path 'ssh-audit' already exists and is not an empty directory.
+lenovo-user@lenovouser:~/Tools$ cd ssh-audit
+lenovo-user@lenovouser:~/Tools/ssh-audit$ python ssh-audit.py
+# ssh-audit.py v1.7.0, moo@arthepsy.eu
+
+usage: ssh-audit.py [-1246pbnvl] <host>
+
+   -h,  --help             print this help
+   -1,  --ssh1             force ssh version 1 only
+   -2,  --ssh2             force ssh version 2 only
+   -4,  --ipv4             enable IPv4 (order of precedence)
+   -6,  --ipv6             enable IPv6 (order of precedence)
+   -p,  --port=<port>      port to connect
+   -b,  --batch            batch output
+   -n,  --no-colors        disable colors
+   -v,  --verbose          verbose output
+   -l,  --level=<level>    minimum output level (info|warn|fail)
+
+
+Experiência 3.1
+
+Utilize o ssh-audit para efetuar um teste ao servidor algo.paranoidjasmine.com, i.e.
+
+lenovo-user@lenovouser:~/Tools/ssh-audit$ python ssh-audit.py algo.paranoidjasmine.com
+# general
+(gen) banner: SSH-2.0-OpenSSH_7.4p1 Debian-10+deb9u2
+(gen) software: OpenSSH 7.4p1
+(gen) compatibility: OpenSSH 7.3+, Dropbear SSH 2016.73+
+(gen) compression: enabled (zlib@openssh.com)
+
+# key exchange algorithms
+(kex) curve25519-sha256              -- [warn] unknown algorithm
+(kex) curve25519-sha256@libssh.org   -- [info] available since OpenSSH 6.5, Dropbear SSH 2013.62
+(kex) diffie-hellman-group16-sha512  -- [info] available since OpenSSH 7.3, Dropbear SSH 2016.73
+(kex) diffie-hellman-group18-sha512  -- [info] available since OpenSSH 7.3
+(kex) diffie-hellman-group14-sha256  -- [info] available since OpenSSH 7.3, Dropbear SSH 2016.73
+
+# host-key algorithms
+(key) ssh-rsa                        -- [info] available since OpenSSH 2.5.0, Dropbear SSH 0.28
+(key) rsa-sha2-512                   -- [info] available since OpenSSH 7.2
+(key) rsa-sha2-256                   -- [info] available since OpenSSH 7.2
+
+# encryption algorithms (ciphers)
+(enc) chacha20-poly1305@openssh.com  -- [info] available since OpenSSH 6.5
+                                     `- [info] default cipher since OpenSSH 6.9.
+(enc) aes128-ctr                     -- [info] available since OpenSSH 3.7, Dropbear SSH 0.52
+(enc) aes192-ctr                     -- [info] available since OpenSSH 3.7
+(enc) aes256-ctr                     -- [info] available since OpenSSH 3.7, Dropbear SSH 0.52
+(enc) aes128-gcm@openssh.com         -- [info] available since OpenSSH 6.2
+(enc) aes256-gcm@openssh.com         -- [info] available since OpenSSH 6.2
+
+# message authentication code algorithms
+(mac) umac-128-etm@openssh.com       -- [info] available since OpenSSH 6.2
+(mac) hmac-sha2-256-etm@openssh.com  -- [info] available since OpenSSH 6.2
+(mac) hmac-sha2-512-etm@openssh.com  -- [info] available since OpenSSH 6.2
+
+# algorithm recommendations (for OpenSSH 7.4)
+(rec) +ssh-ed25519                   -- key algorithm to append 
+
+lenovo-user@lenovouser:~/Tools/ssh-audit$ 
+
+
+
+Pergunta P3.1
+
+Cada grupo indicado abaixo deve utilizar o ssh-audit para efetuar teste aos sites indicados, que têm de obrigatoriamente ter o ssh (usualmente, na porta 22) ativo.
+
+
+lim.di.uminho.pt
+Universidade do Minho
+Added on 2018-02-23 22:41:51 GMT
+[Portugal] Portugal, Braga
+Details
+
+SSH-2.0-OpenSSH_5.5p1 Debian-6+squeeze5
+Key type: ssh-rsa
+Key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDLf5MUiz6zNySY6aD4VHuNdCJy/EIdyhH695wcnmntwWB+
+12mBEnXT6XivNrX32KbKdyw3KaG0SfbCVfjlBuwzr2SAP72+l2HfP5ZLKoCFRVLKAurrYQfTumlG
+9BtVzkKuyL/VFyjZxFeJdmqnJacmVT0IhaZ9LWtrUQT5yzezNPyyWl+FMLtpih76CnGdoiFN9wjc
+fhO...
+
+188.82.223.35
+bl17-223-35.dsl.telepac.pt
+PT Comunicacoes
+Added on 2018-02-23 22:39:36 GMT
+[Portugal] Portugal, Braga
+Details
+
+SSH-2.0-OpenSSH_4.3p2 Debian-9etch3
+Key type: ssh-rsa
+Key: AAAAB3NzaC1yc2EAAAABIwAAAQEA34s7oB6qOTv+X8nATmPSPm5HEpA29+QN5fayev5zfBqq8TdA
+l5/53C3sEkI/M2lOX83dwQkc3o2T51vzgy9LSfA3Vw3TGUJTRNUHzhQhnpcPIYRk+KQ1x8mG9+9/
+azLTEcq2Jt8qgRCx41+JDKEdcPILKk8MPNVmcN0lFBfbyAc46hDWWPIuZAKuiV/VirKQbPczUccH
+ldWKUZ8...
+
+193.136.9.206
+Universidade do Minho
+Added on 2018-02-23 19:59:20 GMT
+[Portugal] Portugal, Braga
+Details
+
+SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.10
+Key type: ecdsa-sha2-nistp256
+Key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIhBpdNep+lqZEOXDCJwWpZx
+AWAIm81pbANWcvsDAa9MpYdCCtTJ80mp83OQLkVE4dhoYih2lnJ0kakEdQ0bKrU=
+Fingerprint: dd:b6:93:73:65:05:6b:80:9c:8a:3c:89:42:7e:0d:26
+
+Kex Algorithms:...
+
+89.152.61.139
+a89-152-61-139.cpe.netcabo.pt
+ZON Tv Cabo
+Added on 2018-02-23 16:37:47 GMT
+[Portugal] Portugal, Braga
+Details
+
+SSH-2.0-dropbear_0.53.1
+Key type: ssh-rsa
+Key: AAAAB3NzaC1yc2EAAAADAQABAAAAglkCa1eapmIxYnZ1GF6hb8zZZpdmaEb5BjZohTsN7e5hmG6f
+2nFMBneEzgUPlhZREWbeTN0EO68HrqODbtO6hnw7gSByM8seRTbzsAZzAcAU5+q2jpnAZOlKuZqR
+cJMLg8YX7FgXfEEnacAFE7hEObcz1r8kVmCQUyl1qNU9jJArKn0=
+Fingerprint: 56:12:02:41:ac:6c:01:94:c5:97:...
+
+193.136.19.136
+geo.di.uminho.pt
+Universidade do Minho
+Added on 2018-02-23 16:31:24 GMT
+[Portugal] Portugal, Braga
+Details
+
+SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.10
+Key type: ssh-rsa
+Key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDMElNvKlbwHNpP/naYr4Rnh7ppxchAWI9O7X042Fk+8Gun
+dckKr2k7e17c7UneeB5pn4FI9cewc72Kd9EavqsOHzm05NAXkKXRfXG8ljugubJwH9s937wfW6Ne
+E7GGYT2JoV7gf+Qpu94y8KXisEhFNGyFOeGi3Y20/qc6rS5iBgMq79wNtrs1vBxr3p+CzvSj92fb
+...
+
+89.152.87.45
+a89-152-87-45.cpe.netcabo.pt
+ZON Tv Cabo
+Added on 2018-02-23 16:27:21 GMT
+[Portugal] Portugal, Braga
+Details
+
+SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u6
+Key type: ssh-rsa
+Key: AAAAB3NzaC1yc2EAAAADAQABAAABAQC60DtSWzzxziA1Qq3abQsva3nH2S/jaBeD8ZKVcbwxhWg3
+NLuNC2M8616rxOqfCoyWP/7VN5BSPkGhbRyplYAyJqHvQGRrnJog7WsGOILmQJZBdZeUu7kTDjSb
+xrP7usLm7riSH0UpK7BuFQcyPVqWKXmRI/G+dukXVjHcLV6fLboGKTuGhh1J3w7Jc/XRv9AAmLUl
+7awLP...
+
+62.28.234.250
+static-wan-bl3-234-250.rev.webside.pt
+Meo - Servicos De Comunicacoes E Multimedia, S.A.
+Added on 2018-02-23 15:54:06 GMT
+[Portugal] Portugal, Braga
+Details
+
+SSH-1.99-OpenSSH_3.9p1
+Key type: ssh-rsa
+Key: AAAAB3NzaC1yc2EAAAABIwAAAIEAtXDQ/cCJon4LZdtEZSrPCvfMOf8LFiCiyC0mTuuRS/j41ts3
+JnHPHKa4xiU9IRd0JVJ5i9Hs6ZpNyi6Qy/287HG66WIvBCXir6Kz/orpB4RRFOdAOVeghGe0nnV7
+3n/DmdzAPSF5rGF0Bgkx8J8kq8lg+l6b1iq0b23z0E56Otc=
+Fingerprint: 2f:4a:9a:ea:56:2d:3e:01:da:11:e0:53...
+
+109.51.89.234
+a109-51-89-234.cpe.netcabo.pt
+ZON Tv Cabo
+Added on 2018-02-23 15:53:45 GMT
+[Portugal] Portugal, Braga
+Details
+
+SSH-2.0-OpenSSH_7.4p1 Debian-10+deb9u2
+Key type: ssh-ed25519
+Key: AAAAC3NzaC1lZDI1NTE5AAAAIDYZGc01fWaVJZrRyr8Ew9rG/B9G85nRkiaeF/mH4ZQM
+Fingerprint: 1b:cf:58:29:11:9c:02:6b:c0:80:2e:57:ea:ca:2f:c9
+
+Kex Algorithms:
+	curve25519-sha256
+	curve25519-sha256@libssh.org
+	ecdh-sha2-nistp256
+	ecdh-sha2-nist...
+
+94.61.164.229
+229.164.61.94.rev.vodafone.pt
+Vodafone Portugal
+Added on 2018-02-23 14:35:38 GMT
+[Portugal] Portugal, Braga
+Details
+
+SSH-2.0-OpenSSH_5.2
+Key type: ssh-rsa
+Key: AAAAB3NzaC1yc2EAAAABIwAAAQEAucl+esJ0RGWgBAKpqzkxqfQnxgQnPK4lC273byKi/2X9BVGL
+wUnCKscSuxeOM/D5eHKtncYENN1u0T09kYRH1rRbLPY0Mo6Ixn4yyLXY7Qv6jTaMAyEp6zG11IOI
+S1NJ8oRJgp0RiOGHsuzIiHutRT7tLn6ygurf7AJMg/ntKXZyG1oyAAQYrBQopWg0gfNqmUG4e0H1
+DWgvHO7L/nUErDnDoeMY2gM...
+
+62.28.235.118
+static-wan-bl3-235-118.rev.webside.pt
+Meo - Servicos De Comunicacoes E Multimedia, S.A.
+Added on 2018-02-23 14:24:37 GMT
+[Portugal] Portugal, Braga
+Details
+
+SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u1
+Key type: ssh-rsa
+Key: AAAAB3NzaC1yc2EAAAADAQABAAABAQChdslCFGWo9Ja4WBFXP1XEFdigUShSBDAWKruW1qMhaXst
+vZxDvntsNLSzN6uPb6nlCLT31F4qpVjRCCkVwjMDrpxC7enAYuXjmdPiLYErPNvVm2Pre6+KDlaI
+1p1NQ6Lm4wRnWyu56wZAMn5oJEKs6trBRqJ+3biuAreTYTrHlFQTruLtGrmcguG1JEE4aQNq6ji2
+IzfG7...
+
+
+Nota 2: Para pesquisar as vulnerabilidades de um produto software pode utilizar a pesquisa no site CVE details, inserindo o nome do produto e a versão a pesquisar.
+
+Grupo 10 - Escolha dois servidores ssh de empresas comerciais em San Francisco.
+
+1.Anexe os resultados do ssh-audit à sua resposta.
+
+primeira empresa comerciais em San Francisco(Organization 	Digital Ocean)
+
+104.236.140.119 
+City 	San Francisco
+Country 	United States
+Organization 	Digital Ocean
+ISP 	Digital Ocean
+Last Update 	2018-02-24T00:16:36.962757
+Hostnames 	webserver.sigweb.net.br
+ASN 	AS14061
+
+
+
+Ports 22 80 443 8001
+
+Services
+
+    22
+    tcp
+    ssh
+
+    SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2
+    Key type: ssh-ed25519
+    Key: AAAAC3NzaC1lZDI1NTE5AAAAIDHP3zxTPcc4VaRgjLStznQg6QGKwd1WRyqhQfF0SVVk
+    Fingerprint: 67:60:5e:74:e7:86:32:cd:75:c7:8a:42:05:ec:35:b1
+
+    Kex Algorithms:
+    	curve25519-sha256@libssh.org
+    	ecdh-sha2-nistp256
+    	ecdh-sha2-nistp384
+    	ecdh-sha2-nistp521
+    	diffie-hellman-group-exchange-sha256
+    	diffie-hellman-group-exchange-sha1
+    	diffie-hellman-group14-sha1
+    	diffie-hellman-group1-sha1
+
+    Server Host Key Algorithms:
+    	ssh-rsa
+    	ssh-dss
+    	ecdsa-sha2-nistp256
+    	ssh-ed25519
+
+    Encryption Algorithms:
+    	aes128-ctr
+    	aes192-ctr
+    	aes256-ctr
+    	arcfour256
+    	arcfour128
+    	aes128-gcm@openssh.com
+    	aes256-gcm@openssh.com
+    	chacha20-poly1305@openssh.com
+    	aes128-cbc
+    	3des-cbc
+    	blowfish-cbc
+    	cast128-cbc
+    	aes192-cbc
+    	aes256-cbc
+    	arcfour
+    	rijndael-cbc@lysator.liu.se
+
+    MAC Algorithms:
+    	hmac-md5-etm@openssh.com
+    	hmac-sha1-etm@openssh.com
+    	umac-64-etm@openssh.com
+    	umac-128-etm@openssh.com
+    	hmac-sha2-256-etm@openssh.com
+    	hmac-sha2-512-etm@openssh.com
+    	hmac-ripemd160-etm@openssh.com
+    	hmac-sha1-96-etm@openssh.com
+    	hmac-md5-96-etm@openssh.com
+    	hmac-md5
+    	hmac-sha1
+    	umac-64@openssh.com
+    	umac-128@openssh.com
+    	hmac-sha2-256
+    	hmac-sha2-512
+    	hmac-ripemd160
+    	hmac-ripemd160@openssh.com
+    	hmac-sha1-96
+    	hmac-md5-96
+
+    Compression Algorithms:
+    	none
+    	zlib@openssh.com
+
+    80
+    tcp
+    http
+     
+    Apache httpdVersion: 2.4.7
+
+    HTTP/1.1 200 OK
+    Date: Fri, 23 Feb 2018 16:54:02 GMT
+    Server: Apache/2.4.7 (Ubuntu)
+    Last-Modified: Sun, 28 Dec 2014 17:43:05 GMT
+    ETag: "2cf6-50b4a4a5064b6"
+    Accept-Ranges: bytes
+    Content-Length: 11510
+    Vary: Accept-Encoding
+    Content-Type: text/html
+
+    443
+    tcp
+    https
+     
+    Apache httpdVersion: 2.4.7
+
+    HTTP/1.1 200 OK
+    Date: Wed, 31 Jan 2018 06:39:24 GMT
+    Server: Apache/2.4.7 (Ubuntu)
+    X-Powered-By: PHP/5.6.16-2+deb.sury.org~trusty+1
+    Set-Cookie: PHPSESSID=37n9d0qkb1d0uohqabspa1kit3; path=/
+    Expires: Thu, 19 Nov 1981 08:52:00 GMT
+    Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+    Pragma: no-cache
+    Vary: Accept-Encoding
+    Content-Length: 3846
+    Content-Type: text/html; charset: UTF-8;charset=UTF-8
+
+    SSL Certificate
+
+    Certificate:
+        Data:
+            Version: 3 (0x2)
+            Serial Number:
+                03:d4:cb:6e:03:cb:46:dd:97:a2:2e:16:6d:42:90:f5:c7:fa
+        Signature Algorithm: sha256WithRSAEncryption
+            Issuer: C=US, O=Let's Encrypt, CN=Let's Encrypt Authority X3
+            Validity
+                Not Before: Dec 20 12:35:11 2017 GMT
+                Not After : Mar 20 12:35:11 2018 GMT
+            Subject: CN=sistema.casaprefabricada.com.br
+            Subject Public Key Info:
+                Public Key Algorithm: rsaEncryption
+                    Public-Key: (2048 bit)
+                    Modulus:
+                        00:9b:67:61:e5:91:cb:68:96:f1:37:1c:0a:21:fc:
+                        0b:ca:f9:50:41:4f:51:20:13:a2:ca:cc:cc:7f:3f:
+                        78:8c:ea:ae:30:8a:6d:74:fb:64:f3:c9:69:16:98:
+                        76:d7:61:ce:02:cf:b7:ca:c7:8e:91:3a:fc:14:a9:
+                        49:ec:47:c4:dd:82:4f:6e:7d:b8:8d:a9:77:31:96:
+                        ee:c1:b3:ab:c6:9c:e2:9e:45:95:fc:24:c3:ce:4f:
+                        fc:cd:29:10:98:7f:43:e2:bc:51:09:4b:61:c9:e3:
+                        31:76:c1:0d:83:83:29:a0:1f:22:e5:4d:fb:82:b5:
+                        71:d4:ef:82:11:92:a8:ad:21:8e:b5:33:56:d2:2a:
+                        68:20:64:c2:3a:c2:5a:f8:8a:a5:80:04:a6:5b:f0:
+                        d1:01:bd:15:86:90:89:fb:6b:44:f5:93:2f:bb:b1:
+                        75:49:20:ee:6d:f1:e5:85:48:1a:e7:50:58:82:48:
+                        3a:11:8f:5d:9a:d4:07:1b:60:9a:68:fa:50:2b:dd:
+                        95:25:0d:02:7d:f5:1f:bd:3f:f6:51:1c:f9:50:c3:
+                        6a:2d:0e:84:23:3a:5b:60:ab:36:43:26:d0:47:8e:
+                        0a:91:04:f4:d2:f2:40:86:d3:af:16:0c:4f:dc:b7:
+                        e8:f1:dd:76:4b:d2:a5:ee:e6:34:ba:25:03:0e:a8:
+                        48:2f
+                    Exponent: 65537 (0x10001)
+            X509v3 extensions:
+                X509v3 Key Usage: critical
+                    Digital Signature, Key Encipherment
+                X509v3 Extended Key Usage: 
+                    TLS Web Server Authentication, TLS Web Client Authentication
+                X509v3 Basic Constraints: critical
+                    CA:FALSE
+                X509v3 Subject Key Identifier: 
+                    2D:0B:B9:37:0F:41:82:C0:B3:DD:37:2D:A4:B6:A9:22:11:B1:17:EC
+                X509v3 Authority Key Identifier: 
+                    keyid:A8:4A:6A:63:04:7D:DD:BA:E6:D1:39:B7:A6:45:65:EF:F3:A8:EC:A1
+
+                Authority Information Access: 
+                    OCSP - URI:http://ocsp.int-x3.letsencrypt.org
+                    CA Issuers - URI:http://cert.int-x3.letsencrypt.org/
+
+                X509v3 Subject Alternative Name: 
+                    DNS:sistema.casaprefabricada.com.br
+                X509v3 Certificate Policies: 
+                    Policy: 2.23.140.1.2.1
+                    Policy: 1.3.6.1.4.1.44947.1.1.1
+                      CPS: http://cps.letsencrypt.org
+                      User Notice:
+                        Explicit Text: This Certificate may only be relied upon by Relying Parties and only in accordance with the Certificate Policy found at https://letsencrypt.org/repository/
+
+        Signature Algorithm: sha256WithRSAEncryption
+             4d:ff:9b:4e:ac:d3:72:28:18:5e:18:89:20:2a:0b:27:71:9f:
+             d9:ca:2c:3d:6a:ee:93:86:ec:53:fe:a9:94:d9:6f:e3:07:d6:
+             36:ee:eb:25:f4:f7:f1:3f:04:aa:08:cc:63:68:cc:d5:f5:b6:
+             8d:29:79:f8:74:bd:05:b8:b1:76:0f:d5:b1:40:be:74:8f:34:
+             a2:40:01:6c:99:4a:9f:64:84:fe:5f:be:8d:53:85:ec:d2:c9:
+             02:9c:2a:2e:00:c1:b6:4a:3d:60:b4:ff:b9:6f:2e:a8:21:77:
+             34:fd:8c:2a:43:3a:83:c4:62:2c:88:30:07:77:f5:de:41:ae:
+             d2:6d:98:96:40:9a:0f:0a:57:10:39:b7:f3:9a:ad:13:61:1e:
+             78:33:08:37:17:0e:cb:09:4c:25:5f:1e:71:21:b0:ac:de:6f:
+             b7:d5:0c:e4:79:f1:1b:56:3c:32:d7:c0:14:cf:e7:c7:c7:82:
+             f8:1a:b9:16:8f:59:ea:5b:02:e2:a1:d1:04:1c:94:d7:0e:da:
+             7f:9c:df:20:a1:cc:fa:45:0f:b8:7d:64:ff:e9:93:6c:c9:9e:
+             ba:7e:6d:28:c2:32:94:4d:b9:8f:56:67:4c:4a:22:bb:bf:b3:
+             3a:39:a7:64:c0:41:db:f8:88:27:52:eb:ba:fb:f5:bc:6f:82:
+             20:95:a0:e9
+
+    8001
+    tcp
+    http-simple-new
+     
+
+    HTTP/1.1 404 Not Found
+    Content-Type: application/json
+    Content-Length: 56
+    Date: Sun, 11 Feb 2018 12:48:47 GMT
+    Connection: keep-alive
+
+
+
+
+
+104.236.140.119
+
+Property Name 	Value
+area_code 	415
+asn 	AS14061
+city 	San Francisco
+country_code 	US
+country_code3 	USA
+country_name 	United States
+data.0._shodan.crawler 	6ff540e4d43ec69d8de2a7b60e1de2d9ddb406dc
+data.0._shodan.id 	null
+data.0._shodan.module 	ssh
+data.0.data 	SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2 Key type: ssh-ed25519 Key: AAAAC3NzaC1lZDI1NTE5AAAAIDHP3zxTPcc4VaRgjLStznQg6QGKwd1WRyqhQfF0SVVk Fingerprint: 67:60:5e:74:e7:86:32:cd:75:c7:8a:42:05:ec:35:b1 Kex Algorithms: curve25519-sha256@libssh.org ecdh-sha2-nistp256 ecdh-sha2-nistp384 ecdh-sha2-nistp521 diffie-hellman-group-exchange-sha256 diffie-hellman-group-exchange-sha1 diffie-hellman-group14-sha1 diffie-hellman-group1-sha1 Server Host Key Algorithms: ssh-rsa ssh-dss ecdsa-sha2-nistp256 ssh-ed25519 Encryption Algorithms: aes128-ctr aes192-ctr aes256-ctr arcfour256 arcfour128 aes128-gcm@openssh.com aes256-gcm@openssh.com chacha20-poly1305@openssh.com aes128-cbc 3des-cbc blowfish-cbc cast128-cbc aes192-cbc aes256-cbc arcfour rijndael-cbc@lysator.liu.se MAC Algorithms: hmac-md5-etm@openssh.com hmac-sha1-etm@openssh.com umac-64-etm@openssh.com umac-128-etm@openssh.com hmac-sha2-256-etm@openssh.com hmac-sha2-512-etm@openssh.com hmac-ripemd160-etm@openssh.com hmac-sha1-96-etm@openssh.com hmac-md5-96-etm@openssh.com hmac-md5 hmac-sha1 umac-64@openssh.com umac-128@openssh.com hmac-sha2-256 hmac-sha2-512 hmac-ripemd160 hmac-ripemd160@openssh.com hmac-sha1-96 hmac-md5-96 Compression Algorithms: none zlib@openssh.com
+data.0.domains 	['sigweb.net.br']
+data.0.hash 	-802023435
+data.0.hostnames 	['webserver.sigweb.net.br']
+data.0.info 	protocol 2.0
+data.0.opts.ssh.cipher 	aes128-ctr
+data.0.opts.ssh.fingerprint 	67:60:5e:74:e7:86:32:cd:75:c7:8a:42:05:ec:35:b1
+data.0.opts.ssh.kex.compression_algorithms 	['none', 'zlib@openssh.com']
+data.0.opts.ssh.kex.encryption_algorithms 	['aes128-ctr', 'aes192-ctr', 'aes256-ctr', 'arcfour256', 'arcfour128', 'aes128-gcm@openssh.com', 'aes256-gcm@openssh.com', 'chacha20-poly1305@openssh.com', 'aes128-cbc', '3des-cbc', 'blowfish-cbc', 'cast128-cbc', 'aes192-cbc', 'aes256-cbc', 'arcfour', 'rijndael-cbc@lysator.liu.se']
+data.0.opts.ssh.kex.kex_algorithms 	['curve25519-sha256@libssh.org', 'ecdh-sha2-nistp256', 'ecdh-sha2-nistp384', 'ecdh-sha2-nistp521', 'diffie-hellman-group-exchange-sha256', 'diffie-hellman-group-exchange-sha1', 'diffie-hellman-group14-sha1', 'diffie-hellman-group1-sha1']
+data.0.opts.ssh.kex.kex_follows 	False
+data.0.opts.ssh.kex.languages 	['']
+data.0.opts.ssh.kex.mac_algorithms 	['hmac-md5-etm@openssh.com', 'hmac-sha1-etm@openssh.com', 'umac-64-etm@openssh.com', 'umac-128-etm@openssh.com', 'hmac-sha2-256-etm@openssh.com', 'hmac-sha2-512-etm@openssh.com', 'hmac-ripemd160-etm@openssh.com', 'hmac-sha1-96-etm@openssh.com', 'hmac-md5-96-etm@openssh.com', 'hmac-md5', 'hmac-sha1', 'umac-64@openssh.com', 'umac-128@openssh.com', 'hmac-sha2-256', 'hmac-sha2-512', 'hmac-ripemd160', 'hmac-ripemd160@openssh.com', 'hmac-sha1-96', 'hmac-md5-96']
+data.0.opts.ssh.kex.server_host_key_algorithms 	['ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ssh-ed25519']
+data.0.opts.ssh.kex.unused 	0
+data.0.opts.ssh.key 	AAAAC3NzaC1lZDI1NTE5AAAAIDHP3zxTPcc4VaRgjLStznQg6QGKwd1WRyqhQfF0SVVk
+data.0.opts.ssh.mac 	hmac-sha2-256
+data.0.opts.ssh.type 	ssh-ed25519
+data.0.port 	22
+data.0.ssh.cipher 	aes128-ctr
+data.0.ssh.fingerprint 	67:60:5e:74:e7:86:32:cd:75:c7:8a:42:05:ec:35:b1
+data.0.ssh.kex.compression_algorithms 	['none', 'zlib@openssh.com']
+data.0.ssh.kex.encryption_algorithms 	['aes128-ctr', 'aes192-ctr', 'aes256-ctr', 'arcfour256', 'arcfour128', 'aes128-gcm@openssh.com', 'aes256-gcm@openssh.com', 'chacha20-poly1305@openssh.com', 'aes128-cbc', '3des-cbc', 'blowfish-cbc', 'cast128-cbc', 'aes192-cbc', 'aes256-cbc', 'arcfour', 'rijndael-cbc@lysator.liu.se']
+data.0.ssh.kex.kex_algorithms 	['curve25519-sha256@libssh.org', 'ecdh-sha2-nistp256', 'ecdh-sha2-nistp384', 'ecdh-sha2-nistp521', 'diffie-hellman-group-exchange-sha256', 'diffie-hellman-group-exchange-sha1', 'diffie-hellman-group14-sha1', 'diffie-hellman-group1-sha1']
+data.0.ssh.kex.kex_follows 	False
+data.0.ssh.kex.languages 	['']
+data.0.ssh.kex.mac_algorithms 	['hmac-md5-etm@openssh.com', 'hmac-sha1-etm@openssh.com', 'umac-64-etm@openssh.com', 'umac-128-etm@openssh.com', 'hmac-sha2-256-etm@openssh.com', 'hmac-sha2-512-etm@openssh.com', 'hmac-ripemd160-etm@openssh.com', 'hmac-sha1-96-etm@openssh.com', 'hmac-md5-96-etm@openssh.com', 'hmac-md5', 'hmac-sha1', 'umac-64@openssh.com', 'umac-128@openssh.com', 'hmac-sha2-256', 'hmac-sha2-512', 'hmac-ripemd160', 'hmac-ripemd160@openssh.com', 'hmac-sha1-96', 'hmac-md5-96']
+data.0.ssh.kex.server_host_key_algorithms 	['ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ssh-ed25519']
+data.0.ssh.kex.unused 	0
+data.0.ssh.key 	AAAAC3NzaC1lZDI1NTE5AAAAIDHP3zxTPcc4VaRgjLStznQg6QGKwd1WRyqhQfF0SVVk
+data.0.ssh.mac 	hmac-sha2-256
+data.0.ssh.type 	ssh-ed25519
+data.0.tags 	['cloud']
+data.0.timestamp 	2018-02-24T00:16:36.962757
+data.0.transport 	tcp
+data.1._shodan.crawler 	23edd73099dd1e26ac30e646b7bb7857d248d542
+data.1._shodan.id 	3d2596ae-b79c-4416-90e3-d75c10da325f
+data.1._shodan.module 	http
+data.1.cpe 	['cpe:/a:apache:http_server:2.4.7']
+data.1.data 	HTTP/1.1 200 OK Date: Fri, 23 Feb 2018 16:54:02 GMT Server: Apache/2.4.7 (Ubuntu) Last-Modified: Sun, 28 Dec 2014 17:43:05 GMT ETag: "2cf6-50b4a4a5064b6" Accept-Ranges: bytes Content-Length: 11510 Vary: Accept-Encoding Content-Type: text/html
+data.1.domains 	['sigweb.net.br']
+data.1.hash 	415764075
+data.1.hostnames 	['webserver.sigweb.net.br']
+data.1.html 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> <html xmlns="http://www.w3.org/1999/xhtml"> <!-- Modified from the Debian original for Ubuntu Last updated: 2014-03-19 See: https://launchpad.net/bugs/1288690 --> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> <title>Apache2 Ubuntu Default Page: It works</title> <style type="text/css" media="screen"> * { margin: 0px 0px 0px 0px; padding: 0px 0px 0px 0px; } body, html { padding: 3px 3px 3px 3px; background-color: #D8DBE2; font-family: Verdana, sans-serif; font-size: 11pt; text-align: center; } div.main_page { position: relative; display: table; width: 800px; margin-bottom: 3px; margin-left: auto; margin-right: auto; padding: 0px 0px 0px 0px; border-width: 2px; border-color: #212738; border-style: solid; background-color: #FFFFFF; text-align: center; } div.page_header { height: 99px; width: 100%; background-color: #F5F6F7; } div.page_header span { margin: 15px 0px 0px 50px; font-size: 180%; font-weight: bold; } div.page_header img { margin: 3px 0px 0px 40px; border: 0px 0px 0px; } div.table_of_contents { clear: left; min-width: 200px; margin: 3px 3px 3px 3px; background-color: #FFFFFF; text-align: left; } div.table_of_contents_item { clear: left; width: 100%; margin: 4px 0px 0px 0px; background-color: #FFFFFF; color: #000000; text-align: left; } div.table_of_contents_item a { margin: 6px 0px 0px 6px; } div.content_section { margin: 3px 3px 3px 3px; background-color: #FFFFFF; text-align: left; } div.content_section_text { padding: 4px 8px 4px 8px; color: #000000; font-size: 100%; } div.content_section_text pre { margin: 8px 0px 8px 0px; padding: 8px 8px 8px 8px; border-width: 1px; border-style: dotted; border-color: #000000; background-color: #F5F6F7; font-style: italic; } div.content_section_text p { margin-bottom: 6px; } div.content_section_text ul, div.content_section_text li { padding: 4px 8px 4px 16px; } div.section_header { padding: 3px 6px 3px 6px; background-color: #8E9CB2; color: #FFFFFF; font-weight: bold; font-size: 112%; text-align: center; } div.section_header_red { background-color: #CD214F; } div.section_header_grey { background-color: #9F9386; } .floating_element { position: relative; float: left; } div.table_of_contents_item a, div.content_section_text a { text-decoration: none; font-weight: bold; } div.table_of_contents_item a:link, div.table_of_contents_item a:visited, div.table_of_contents_item a:active { color: #000000; } div.table_of_contents_item a:hover { background-color: #000000; color: #FFFFFF; } div.content_section_text a:link, div.content_section_text a:visited, div.content_section_text a:active { background-color: #DCDFE6; color: #000000; } div.content_section_text a:hover { background-color: #000000; color: #DCDFE6; } div.validator { } </style> </head> <body> <div class="main_page"> <div class="page_header floating_element"> <img src="/icons/ubuntu-logo.png" alt="Ubuntu Logo" class="floating_element"/> <span class="floating_element"> Apache2 Ubuntu Default Page </span> </div> <!-- <div class="table_of_contents floating_element"> <div class="section_header section_header_grey"> TABLE OF CONTENTS </div> <div class="table_of_contents_item floating_element"> <a href="#about">About</a> </div> <div class="table_of_contents_item floating_element"> <a href="#changes">Changes</a> </div> <div class="table_of_contents_item floating_element"> <a href="#scope">Scope</a> </div> <div class="table_of_contents_item floating_element"> <a href="#files">Config files</a> </div> </div> --> <div class="content_section floating_element"> <div class="section_header section_header_red"> <div id="about"></div> It works! </div> <div class="content_section_text"> <p> This is the default welcome page used to test the correct operation of the Apache2 server after installation on Ubuntu systems. It is based on the equivalent page on Debian, from which the Ubuntu Apache packaging is derived. If you can read this page, it means that the Apache HTTP server installed at this site is working properly. You should <b>replace this file</b> (located at <tt>/var/www/html/index.html</tt>) before continuing to operate your HTTP server. </p> <p> If you are a normal user of this web site and don't know what this page is about, this probably means that the site is currently unavailable due to maintenance. If the problem persists, please contact the site's administrator. </p> </div> <div class="section_header"> <div id="changes"></div> Configuration Overview </div> <div class="content_section_text"> <p> Ubuntu's Apache2 default configuration is different from the upstream default configuration, and split into several files optimized for interaction with Ubuntu tools. The configuration system is <b>fully documented in /usr/share/doc/apache2/README.Debian.gz</b>. Refer to this for the full documentation. Documentation for the web server itself can be found by accessing the <a href="/manual">manual</a> if the <tt>apache2-doc</tt> package was installed on this server. </p> <p> The configuration layout for an Apache2 web server installation on Ubuntu systems is as follows: </p> <pre> /etc/apache2/ |-- apache2.conf | `-- ports.conf |-- mods-enabled | |-- *.load | `-- *.conf |-- conf-enabled | `-- *.conf |-- sites-enabled | `-- *.conf </pre> <ul> <li> <tt>apache2.conf</tt> is the main configuration file. It puts the pieces together by including all remaining configuration files when starting up the web server. </li> <li> <tt>ports.conf</tt> is always included from the main configuration file. It is used to determine the listening ports for incoming connections, and this file can be customized anytime. </li> <li> Configuration files in the <tt>mods-enabled/</tt>, <tt>conf-enabled/</tt> and <tt>sites-enabled/</tt> directories contain particular configuration snippets which manage modules, global configuration fragments, or virtual host configurations, respectively. </li> <li> They are activated by symlinking available configuration files from their respective *-available/ counterparts. These should be managed by using our helpers <tt> <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2enmod">a2enmod</a>, <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2dismod">a2dismod</a>, </tt> <tt> <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2ensite">a2ensite</a>, <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2dissite">a2dissite</a>, </tt> and <tt> <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2enconf">a2enconf</a>, <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2disconf">a2disconf</a> </tt>. See their respective man pages for detailed information. </li> <li> The binary is called apache2. Due to the use of environment variables, in the default configuration, apache2 needs to be started/stopped with <tt>/etc/init.d/apache2</tt> or <tt>apache2ctl</tt>. <b>Calling <tt>/usr/bin/apache2</tt> directly will not work</b> with the default configuration. </li> </ul> </div> <div class="section_header"> <div id="docroot"></div> Document Roots </div> <div class="content_section_text"> <p> By default, Ubuntu does not allow access through the web browser to <em>any</em> file apart of those located in <tt>/var/www</tt>, <a href="http://httpd.apache.org/docs/2.4/mod/mod_userdir.html">public_html</a> directories (when enabled) and <tt>/usr/share</tt> (for web applications). If your site is using a web document root located elsewhere (such as in <tt>/srv</tt>) you may need to whitelist your document root directory in <tt>/etc/apache2/apache2.conf</tt>. </p> <p> The default Ubuntu document root is <tt>/var/www/html</tt>. You can make your own virtual hosts under /var/www. This is different to previous releases which provides better security out of the box. </p> </div> <div class="section_header"> <div id="bugs"></div> Reporting Problems </div> <div class="content_section_text"> <p> Please use the <tt>ubuntu-bug</tt> tool to report bugs in the Apache2 package with Ubuntu. However, check <a href="https://bugs.launchpad.net/ubuntu/+source/apache2">existing bug reports</a> before reporting a new bug. </p> <p> Please report bugs specific to modules (such as PHP and others) to respective packages, not to the web server itself. </p> </div> </div> </div> <div class="validator"> <p> <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a> </p> </div> </body> </html>
+data.1.http.favicon 	null
+data.1.http.host 	104.236.140.119
+data.1.http.html 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> <html xmlns="http://www.w3.org/1999/xhtml"> <!-- Modified from the Debian original for Ubuntu Last updated: 2014-03-19 See: https://launchpad.net/bugs/1288690 --> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> <title>Apache2 Ubuntu Default Page: It works</title> <style type="text/css" media="screen"> * { margin: 0px 0px 0px 0px; padding: 0px 0px 0px 0px; } body, html { padding: 3px 3px 3px 3px; background-color: #D8DBE2; font-family: Verdana, sans-serif; font-size: 11pt; text-align: center; } div.main_page { position: relative; display: table; width: 800px; margin-bottom: 3px; margin-left: auto; margin-right: auto; padding: 0px 0px 0px 0px; border-width: 2px; border-color: #212738; border-style: solid; background-color: #FFFFFF; text-align: center; } div.page_header { height: 99px; width: 100%; background-color: #F5F6F7; } div.page_header span { margin: 15px 0px 0px 50px; font-size: 180%; font-weight: bold; } div.page_header img { margin: 3px 0px 0px 40px; border: 0px 0px 0px; } div.table_of_contents { clear: left; min-width: 200px; margin: 3px 3px 3px 3px; background-color: #FFFFFF; text-align: left; } div.table_of_contents_item { clear: left; width: 100%; margin: 4px 0px 0px 0px; background-color: #FFFFFF; color: #000000; text-align: left; } div.table_of_contents_item a { margin: 6px 0px 0px 6px; } div.content_section { margin: 3px 3px 3px 3px; background-color: #FFFFFF; text-align: left; } div.content_section_text { padding: 4px 8px 4px 8px; color: #000000; font-size: 100%; } div.content_section_text pre { margin: 8px 0px 8px 0px; padding: 8px 8px 8px 8px; border-width: 1px; border-style: dotted; border-color: #000000; background-color: #F5F6F7; font-style: italic; } div.content_section_text p { margin-bottom: 6px; } div.content_section_text ul, div.content_section_text li { padding: 4px 8px 4px 16px; } div.section_header { padding: 3px 6px 3px 6px; background-color: #8E9CB2; color: #FFFFFF; font-weight: bold; font-size: 112%; text-align: center; } div.section_header_red { background-color: #CD214F; } div.section_header_grey { background-color: #9F9386; } .floating_element { position: relative; float: left; } div.table_of_contents_item a, div.content_section_text a { text-decoration: none; font-weight: bold; } div.table_of_contents_item a:link, div.table_of_contents_item a:visited, div.table_of_contents_item a:active { color: #000000; } div.table_of_contents_item a:hover { background-color: #000000; color: #FFFFFF; } div.content_section_text a:link, div.content_section_text a:visited, div.content_section_text a:active { background-color: #DCDFE6; color: #000000; } div.content_section_text a:hover { background-color: #000000; color: #DCDFE6; } div.validator { } </style> </head> <body> <div class="main_page"> <div class="page_header floating_element"> <img src="/icons/ubuntu-logo.png" alt="Ubuntu Logo" class="floating_element"/> <span class="floating_element"> Apache2 Ubuntu Default Page </span> </div> <!-- <div class="table_of_contents floating_element"> <div class="section_header section_header_grey"> TABLE OF CONTENTS </div> <div class="table_of_contents_item floating_element"> <a href="#about">About</a> </div> <div class="table_of_contents_item floating_element"> <a href="#changes">Changes</a> </div> <div class="table_of_contents_item floating_element"> <a href="#scope">Scope</a> </div> <div class="table_of_contents_item floating_element"> <a href="#files">Config files</a> </div> </div> --> <div class="content_section floating_element"> <div class="section_header section_header_red"> <div id="about"></div> It works! </div> <div class="content_section_text"> <p> This is the default welcome page used to test the correct operation of the Apache2 server after installation on Ubuntu systems. It is based on the equivalent page on Debian, from which the Ubuntu Apache packaging is derived. If you can read this page, it means that the Apache HTTP server installed at this site is working properly. You should <b>replace this file</b> (located at <tt>/var/www/html/index.html</tt>) before continuing to operate your HTTP server. </p> <p> If you are a normal user of this web site and don't know what this page is about, this probably means that the site is currently unavailable due to maintenance. If the problem persists, please contact the site's administrator. </p> </div> <div class="section_header"> <div id="changes"></div> Configuration Overview </div> <div class="content_section_text"> <p> Ubuntu's Apache2 default configuration is different from the upstream default configuration, and split into several files optimized for interaction with Ubuntu tools. The configuration system is <b>fully documented in /usr/share/doc/apache2/README.Debian.gz</b>. Refer to this for the full documentation. Documentation for the web server itself can be found by accessing the <a href="/manual">manual</a> if the <tt>apache2-doc</tt> package was installed on this server. </p> <p> The configuration layout for an Apache2 web server installation on Ubuntu systems is as follows: </p> <pre> /etc/apache2/ |-- apache2.conf | `-- ports.conf |-- mods-enabled | |-- *.load | `-- *.conf |-- conf-enabled | `-- *.conf |-- sites-enabled | `-- *.conf </pre> <ul> <li> <tt>apache2.conf</tt> is the main configuration file. It puts the pieces together by including all remaining configuration files when starting up the web server. </li> <li> <tt>ports.conf</tt> is always included from the main configuration file. It is used to determine the listening ports for incoming connections, and this file can be customized anytime. </li> <li> Configuration files in the <tt>mods-enabled/</tt>, <tt>conf-enabled/</tt> and <tt>sites-enabled/</tt> directories contain particular configuration snippets which manage modules, global configuration fragments, or virtual host configurations, respectively. </li> <li> They are activated by symlinking available configuration files from their respective *-available/ counterparts. These should be managed by using our helpers <tt> <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2enmod">a2enmod</a>, <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2dismod">a2dismod</a>, </tt> <tt> <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2ensite">a2ensite</a>, <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2dissite">a2dissite</a>, </tt> and <tt> <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2enconf">a2enconf</a>, <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2disconf">a2disconf</a> </tt>. See their respective man pages for detailed information. </li> <li> The binary is called apache2. Due to the use of environment variables, in the default configuration, apache2 needs to be started/stopped with <tt>/etc/init.d/apache2</tt> or <tt>apache2ctl</tt>. <b>Calling <tt>/usr/bin/apache2</tt> directly will not work</b> with the default configuration. </li> </ul> </div> <div class="section_header"> <div id="docroot"></div> Document Roots </div> <div class="content_section_text"> <p> By default, Ubuntu does not allow access through the web browser to <em>any</em> file apart of those located in <tt>/var/www</tt>, <a href="http://httpd.apache.org/docs/2.4/mod/mod_userdir.html">public_html</a> directories (when enabled) and <tt>/usr/share</tt> (for web applications). If your site is using a web document root located elsewhere (such as in <tt>/srv</tt>) you may need to whitelist your document root directory in <tt>/etc/apache2/apache2.conf</tt>. </p> <p> The default Ubuntu document root is <tt>/var/www/html</tt>. You can make your own virtual hosts under /var/www. This is different to previous releases which provides better security out of the box. </p> </div> <div class="section_header"> <div id="bugs"></div> Reporting Problems </div> <div class="content_section_text"> <p> Please use the <tt>ubuntu-bug</tt> tool to report bugs in the Apache2 package with Ubuntu. However, check <a href="https://bugs.launchpad.net/ubuntu/+source/apache2">existing bug reports</a> before reporting a new bug. </p> <p> Please report bugs specific to modules (such as PHP and others) to respective packages, not to the web server itself. </p> </div> </div> </div> <div class="validator"> <p> <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a> </p> </div> </body> </html>
+data.1.http.html_hash 	-1593054532
+data.1.http.location 	/
+data.1.http.redirects 	[]
+data.1.http.robots 	null
+data.1.http.securitytxt 	null
+data.1.http.server 	Apache/2.4.7 (Ubuntu)
+data.1.http.sitemap 	null
+data.1.http.title 	Apache2 Ubuntu Default Page: It works
+data.1.info 	(Ubuntu)
+data.1.port 	80
+data.1.product 	Apache httpd
+data.1.tags 	['cloud']
+data.1.timestamp 	2018-02-23T16:54:02.627011
+data.1.title 	Apache2 Ubuntu Default Page: It works
+data.1.transport 	tcp
+data.1.version 	2.4.7
+data.2._shodan.crawler 	63eb28fc97905ae9bb3bb2d833157792bedfef99
+data.2._shodan.id 	4316058e-e317-45d0-9ee5-5682cfc6dccb
+data.2._shodan.module 	http-simple-new
+data.2.data 	HTTP/1.1 404 Not Found Content-Type: application/json Content-Length: 56 Date: Sun, 11 Feb 2018 12:48:47 GMT Connection: keep-alive
+data.2.domains 	['sigweb.net.br']
+data.2.hash 	741372481
+data.2.hostnames 	['webserver.sigweb.net.br']
+data.2.html 	{"code":"ResourceNotFound","message":"/ does not exist"}
+data.2.http.favicon 	null
+data.2.http.host 	104.236.140.119
+data.2.http.html 	{"code":"ResourceNotFound","message":"/ does not exist"}
+data.2.http.html_hash 	821764782
+data.2.http.location 	/
+data.2.http.redirects 	[]
+data.2.http.robots 	null
+data.2.http.server 	null
+data.2.http.sitemap 	null
+data.2.http.title 	null
+data.2.port 	8001
+data.2.tags 	['cloud']
+data.2.timestamp 	2018-02-11T12:48:47.086048
+data.2.transport 	tcp
+data.3._shodan.crawler 	c4f6dbc45caa04f64112a93cf20c797b31978655
+data.3._shodan.id 	c329d714-d73f-4e1a-abdf-36636746497a
+data.3._shodan.module 	https
+data.3.cpe 	['cpe:/a:apache:http_server:2.4.7']
+data.3.data 	HTTP/1.1 200 OK Date: Wed, 31 Jan 2018 06:39:24 GMT Server: Apache/2.4.7 (Ubuntu) X-Powered-By: PHP/5.6.16-2+deb.sury.org~trusty+1 Set-Cookie: PHPSESSID=37n9d0qkb1d0uohqabspa1kit3; path=/ Expires: Thu, 19 Nov 1981 08:52:00 GMT Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0 Pragma: no-cache Vary: Accept-Encoding Content-Length: 3846 Content-Type: text/html; charset: UTF-8;charset=UTF-8
+data.3.domains 	['sigweb.net.br']
+data.3.hash 	16156031
+data.3.hostnames 	['webserver.sigweb.net.br']
+data.3.html 	<!DOCTYPE html><html lang="pt-br"> <head> <meta charset="UTF-8"> <title>Diamond House</title> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Le styles --> <link href="https://104.236.140.119/css/bootstrap-theme.min.css" media="all" rel="stylesheet" type="text/css"> <link href="https://104.236.140.119/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css"> <!--[if IE 7]> <link href="https://104.236.140.119/css/font-awesome-ie7.min.css" media="screen" rel="stylesheet" type="text/css"><![endif]--> <link href="https://104.236.140.119/css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css"> <link href="https://104.236.140.119/css/jquery-ui.min.css" media="screen" rel="stylesheet" type="text/css"> <link href="https://104.236.140.119/css/style.css" media="screen" rel="stylesheet" type="text/css"> <link href="https://104.236.140.119/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"> </head> <body> <div class="hidden-print"> <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"> <div class="container"> <div class="navbar-header"> <a class="navbar-brand" href="/">Diamond House</a> </div> <div class="collapse navbar-collapse"> </div><!--/.nav-collapse --> </div> </nav> </div> <div class="container"> <h2><span class="zf-green">Efetue Login</span></h2> <div class="row"> <div class="col-lg-3"> <form action="" method="POST" name="login" id="login"> <dl class='zend_form form-group'> <dt id="nomeUsuario-label" class=""> <label for="nomeUsuario" >Nome de usuário</label> </dt> <dd id="nomeUsuario-element"> <input type="text" name="nomeUsuario" class="form-control" id="nomeUsuario" value=""> </dd> <dt id="password-label" class=""> <label for="password" >Senha</label> </dt> <dd id="password-element"> <input type="password" name="password" class="form-control" id="password" value=""> </dd> <dt id="enviar-label" class=""> <label for="enviar" ></label> </dt> <dd id="enviar-element"> <input type="submit" name="enviar" class="btn btn-primary" id="enviar" value="Login"> </dd> </dl> </form> <a href="/auth/recuperar"> <i class="icon-question-sign"></i> Esqueci minha senha </a> </div> </div> </div> <!-- /container --> <footer class="footer"> <div class="container"> Desenvolvido por <a href="http://www.sigweb.net.br" target="_blank">Sig Web</a> </div> </footer> <!-- Scripts --> <script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script> <script type="text/javascript" src="https://104.236.140.119/js/jquery-ui-1.10.2.custom.min.js"></script> <script type="text/javascript" src="https://104.236.140.119/js/jquery.maskMoney.js"></script> <script type="text/javascript" src="https://104.236.140.119/js/jquery.maskedinput.min.js"></script> <script type="text/javascript" src="https://104.236.140.119/js/global.js"></script> <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script> <script type="text/javascript" src="https://104.236.140.119/js/bootstrap.min.js"></script> <!--[if lt IE 9]><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script><![endif]--> </body> </html>
+data.3.http.components.Bootstrap.categories 	['Web Frameworks']
+data.3.http.components.Font Awesome.categories 	['Font Scripts']
+data.3.http.components.jQuery UI.categories 	['JavaScript Frameworks']
+data.3.http.components.jQuery.categories 	['JavaScript Frameworks']
+data.3.http.favicon 	null
+data.3.http.host 	104.236.140.119
+data.3.http.html 	<!DOCTYPE html><html lang="pt-br"> <head> <meta charset="UTF-8"> <title>Diamond House</title> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Le styles --> <link href="https://104.236.140.119/css/bootstrap-theme.min.css" media="all" rel="stylesheet" type="text/css"> <link href="https://104.236.140.119/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css"> <!--[if IE 7]> <link href="https://104.236.140.119/css/font-awesome-ie7.min.css" media="screen" rel="stylesheet" type="text/css"><![endif]--> <link href="https://104.236.140.119/css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css"> <link href="https://104.236.140.119/css/jquery-ui.min.css" media="screen" rel="stylesheet" type="text/css"> <link href="https://104.236.140.119/css/style.css" media="screen" rel="stylesheet" type="text/css"> <link href="https://104.236.140.119/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"> </head> <body> <div class="hidden-print"> <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"> <div class="container"> <div class="navbar-header"> <a class="navbar-brand" href="/">Diamond House</a> </div> <div class="collapse navbar-collapse"> </div><!--/.nav-collapse --> </div> </nav> </div> <div class="container"> <h2><span class="zf-green">Efetue Login</span></h2> <div class="row"> <div class="col-lg-3"> <form action="" method="POST" name="login" id="login"> <dl class='zend_form form-group'> <dt id="nomeUsuario-label" class=""> <label for="nomeUsuario" >Nome de usuário</label> </dt> <dd id="nomeUsuario-element"> <input type="text" name="nomeUsuario" class="form-control" id="nomeUsuario" value=""> </dd> <dt id="password-label" class=""> <label for="password" >Senha</label> </dt> <dd id="password-element"> <input type="password" name="password" class="form-control" id="password" value=""> </dd> <dt id="enviar-label" class=""> <label for="enviar" ></label> </dt> <dd id="enviar-element"> <input type="submit" name="enviar" class="btn btn-primary" id="enviar" value="Login"> </dd> </dl> </form> <a href="/auth/recuperar"> <i class="icon-question-sign"></i> Esqueci minha senha </a> </div> </div> </div> <!-- /container --> <footer class="footer"> <div class="container"> Desenvolvido por <a href="http://www.sigweb.net.br" target="_blank">Sig Web</a> </div> </footer> <!-- Scripts --> <script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script> <script type="text/javascript" src="https://104.236.140.119/js/jquery-ui-1.10.2.custom.min.js"></script> <script type="text/javascript" src="https://104.236.140.119/js/jquery.maskMoney.js"></script> <script type="text/javascript" src="https://104.236.140.119/js/jquery.maskedinput.min.js"></script> <script type="text/javascript" src="https://104.236.140.119/js/global.js"></script> <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script> <script type="text/javascript" src="https://104.236.140.119/js/bootstrap.min.js"></script> <!--[if lt IE 9]><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script><![endif]--> </body> </html>
+data.3.http.html_hash 	208925411
+data.3.http.location 	/auth
+data.3.http.redirects 	[{u'host': u'104.236.140.119', u'data': u'HTTP/1.1 302 Found\r\nDate: Wed, 31 Jan 2018 06:39:16 GMT\r\nServer: Apache/2.4.7 (Ubuntu)\r\nX-Powered-By: PHP/5.6.16-2+deb.sury.org~trusty+1\r\nSet-Cookie: PHPSESSID=hchndd6t46au9f3duqnp5vqdq1; path=/\r\nExpires: Thu, 19 Nov 1981 08:52:00 GMT\r\nCache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0\r\nPragma: no-cache\r\nLocation: /auth\r\nContent-Length: 2599\r\nContent-Type: text/html; charset: UTF-8;charset=UTF-8\r\n\r\n', u'location': u'/'}]
+data.3.http.robots 	null
+data.3.http.server 	Apache/2.4.7 (Ubuntu)
+data.3.http.sitemap 	null
+data.3.http.title 	Diamond House
+data.3.info 	(Ubuntu)
+data.3.opts.heartbleed 	2018/01/30 22:39:44 104.236.140.119:443 - SAFE
+data.3.opts.vulns 	['!CVE-2014-0160']
+data.3.port 	443
+data.3.product 	Apache httpd
+data.3.ssl.acceptable_cas 	[]
+data.3.ssl.alpn 	[]
+data.3.ssl.cert.expired 	False
+data.3.ssl.cert.expires 	20180320123511Z
+data.3.ssl.cert.extensions 	[{u'critical': True, u'data': u'\\x03\\x02\\x05\\xa0', u'name': u'keyUsage'}, {u'data': u'0\\x14\\x06\\x08+\\x06\\x01\\x05\\x05\\x07\\x03\\x01\\x06\\x08+\\x06\\x01\\x05\\x05\\x07\\x03\\x02', u'name': u'extendedKeyUsage'}, {u'critical': True, u'data': u'0\\x00', u'name': u'basicConstraints'}, {u'data': u'\\x04\\x14-\\x0b\\xb97\\x0fA\\x82\\xc0\\xb3\\xdd7-\\xa4\\xb6\\xa9"\\x11\\xb1\\x17\\xec', u'name': u'subjectKeyIdentifier'}, {u'data': u'0\\x16\\x80\\x14\\xa8Jjc\\x04}\\xdd\\xba\\xe6\\xd19\\xb7\\xa6Ee\\xef\\xf3\\xa8\\xec\\xa1', u'name': u'authorityKeyIdentifier'}, {u'data': u'0a0.\\x06\\x08+\\x06\\x01\\x05\\x05\\x070\\x01\\x86"http://ocsp.int-x3.letsencrypt.org0/\\x06\\x08+\\x06\\x01\\x05\\x05\\x070\\x02\\x86#http://cert.int-x3.letsencrypt.org/', u'name': u'authorityInfoAccess'}, {u'data': u'0!\\x82\\x1fsistema.casaprefabricada.com.br', u'name': u'subjectAltName'}, {u'data': u'0\\x81\\xf30\\x08\\x06\\x06g\\x81\\x0c\\x01\\x02\\x010\\x81\\xe6\\x06\\x0b+\\x06\\x01\\x04\\x01\\x82\\xdf\\x13\\x01\\x01\\x010\\x81\\xd60&\\x06\\x08+\\x06\\x01\\x05\\x05\\x07\\x02\\x01\\x16\\x1ahttp://cps.letsencrypt.org0\\x81\\xab\\x06\\x08+\\x06\\x01\\x05\\x05\\x07\\x02\\x020\\x81\\x9e\\x0c\\x81\\x9bThis Certificate may only be relied upon by Relying Parties and only in accordance with the Certificate Policy found at https://letsencrypt.org/repository/', u'name': u'certificatePolicies'}]
+data.3.ssl.cert.fingerprint.sha1 	399cb5b2cac00453ca2a10661503b6329d1a37b0
+data.3.ssl.cert.fingerprint.sha256 	fa9678137876906ddcd849010596df6fefda8507953034ce9abf7d84b0d54ad5
+data.3.ssl.cert.issued 	20171220123511Z
+data.3.ssl.cert.issuer.C 	US
+data.3.ssl.cert.issuer.CN 	Let's Encrypt Authority X3
+data.3.ssl.cert.issuer.O 	Let's Encrypt
+data.3.ssl.cert.pubkey.bits 	2048
+data.3.ssl.cert.pubkey.type 	rsa
+data.3.ssl.cert.serial 	333747124095270948588059059677320766146554
+data.3.ssl.cert.sig_alg 	sha256WithRSAEncryption
+data.3.ssl.cert.subject.CN 	sistema.casaprefabricada.com.br
+data.3.ssl.cert.version 	2
+data.3.ssl.chain 	['-----BEGIN CERTIFICATE-----\nMIIFITCCBAmgAwIBAgISA9TLbgPLRt2Xoi4WbUKQ9cf6MA0GCSqGSIb3DQEBCwUA\nMEoxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MSMwIQYDVQQD\nExpMZXQncyBFbmNyeXB0IEF1dGhvcml0eSBYMzAeFw0xNzEyMjAxMjM1MTFaFw0x\nODAzMjAxMjM1MTFaMCoxKDAmBgNVBAMTH3Npc3RlbWEuY2FzYXByZWZhYnJpY2Fk\nYS5jb20uYnIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCbZ2Hlkcto\nlvE3HAoh/AvK+VBBT1EgE6LKzMx/P3iM6q4wim10+2TzyWkWmHbXYc4Cz7fKx46R\nOvwUqUnsR8Tdgk9ufbiNqXcxlu7Bs6vGnOKeRZX8JMPOT/zNKRCYf0PivFEJS2HJ\n4zF2wQ2DgymgHyLlTfuCtXHU74IRkqitIY61M1bSKmggZMI6wlr4iqWABKZb8NEB\nvRWGkIn7a0T1ky+7sXVJIO5t8eWFSBrnUFiCSDoRj12a1AcbYJpo+lAr3ZUlDQJ9\n9R+9P/ZRHPlQw2otDoQjOltgqzZDJtBHjgqRBPTS8kCG068WDE/ct+jx3XZL0qXu\n5jS6JQMOqEgvAgMBAAGjggIfMIICGzAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYw\nFAYIKwYBBQUHAwEGCCsGAQUFBwMCMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFC0L\nuTcPQYLAs903LaS2qSIRsRfsMB8GA1UdIwQYMBaAFKhKamMEfd265tE5t6ZFZe/z\nqOyhMG8GCCsGAQUFBwEBBGMwYTAuBggrBgEFBQcwAYYiaHR0cDovL29jc3AuaW50\nLXgzLmxldHNlbmNyeXB0Lm9yZzAvBggrBgEFBQcwAoYjaHR0cDovL2NlcnQuaW50\nLXgzLmxldHNlbmNyeXB0Lm9yZy8wKgYDVR0RBCMwIYIfc2lzdGVtYS5jYXNhcHJl\nZmFicmljYWRhLmNvbS5icjCB/gYDVR0gBIH2MIHzMAgGBmeBDAECATCB5gYLKwYB\nBAGC3xMBAQEwgdYwJgYIKwYBBQUHAgEWGmh0dHA6Ly9jcHMubGV0c2VuY3J5cHQu\nb3JnMIGrBggrBgEFBQcCAjCBngyBm1RoaXMgQ2VydGlmaWNhdGUgbWF5IG9ubHkg\nYmUgcmVsaWVkIHVwb24gYnkgUmVseWluZyBQYXJ0aWVzIGFuZCBvbmx5IGluIGFj\nY29yZGFuY2Ugd2l0aCB0aGUgQ2VydGlmaWNhdGUgUG9saWN5IGZvdW5kIGF0IGh0\ndHBzOi8vbGV0c2VuY3J5cHQub3JnL3JlcG9zaXRvcnkvMA0GCSqGSIb3DQEBCwUA\nA4IBAQBN/5tOrNNyKBheGIkgKgsncZ/Zyiw9au6ThuxT/qmU2W/jB9Y27usl9Pfx\nPwSqCMxjaMzV9baNKXn4dL0FuLF2D9WxQL50jzSiQAFsmUqfZIT+X76NU4Xs0skC\nnCouAMG2Sj1gtP+5by6oIXc0/YwqQzqDxGIsiDAHd/XeQa7SbZiWQJoPClcQObfz\nmq0TYR54Mwg3Fw7LCUwlXx5xIbCs3m+31QzkefEbVjwy18AUz+fHx4L4GrkWj1nq\nWwLiodEEHJTXDtp/nN8gocz6RQ+4fWT/6ZNsyZ66fm0owjKUTbmPVmdMSiK7v7M6\nOadkwEHb+IgnUuu6+/W8b4IglaDp\n-----END CERTIFICATE-----\n', '-----BEGIN CERTIFICATE-----\nMIIEkjCCA3qgAwIBAgIQCgFBQgAAAVOFc2oLheynCDANBgkqhkiG9w0BAQsFADA/\nMSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT\nDkRTVCBSb290IENBIFgzMB4XDTE2MDMxNzE2NDA0NloXDTIxMDMxNzE2NDA0Nlow\nSjELMAkGA1UEBhMCVVMxFjAUBgNVBAoTDUxldCdzIEVuY3J5cHQxIzAhBgNVBAMT\nGkxldCdzIEVuY3J5cHQgQXV0aG9yaXR5IFgzMIIBIjANBgkqhkiG9w0BAQEFAAOC\nAQ8AMIIBCgKCAQEAnNMM8FrlLke3cl03g7NoYzDq1zUmGSXhvb418XCSL7e4S0EF\nq6meNQhY7LEqxGiHC6PjdeTm86dicbp5gWAf15Gan/PQeGdxyGkOlZHP/uaZ6WA8\nSMx+yk13EiSdRxta67nsHjcAHJyse6cF6s5K671B5TaYucv9bTyWaN8jKkKQDIZ0\nZ8h/pZq4UmEUEz9l6YKHy9v6Dlb2honzhT+Xhq+w3Brvaw2VFn3EK6BlspkENnWA\na6xK8xuQSXgvopZPKiAlKQTGdMDQMc2PMTiVFrqoM7hD8bEfwzB/onkxEz0tNvjj\n/PIzark5McWvxI0NHWQWM6r6hCm21AvA2H3DkwIDAQABo4IBfTCCAXkwEgYDVR0T\nAQH/BAgwBgEB/wIBADAOBgNVHQ8BAf8EBAMCAYYwfwYIKwYBBQUHAQEEczBxMDIG\nCCsGAQUFBzABhiZodHRwOi8vaXNyZy50cnVzdGlkLm9jc3AuaWRlbnRydXN0LmNv\nbTA7BggrBgEFBQcwAoYvaHR0cDovL2FwcHMuaWRlbnRydXN0LmNvbS9yb290cy9k\nc3Ryb290Y2F4My5wN2MwHwYDVR0jBBgwFoAUxKexpHsscfrb4UuQdf/EFWCFiRAw\nVAYDVR0gBE0wSzAIBgZngQwBAgEwPwYLKwYBBAGC3xMBAQEwMDAuBggrBgEFBQcC\nARYiaHR0cDovL2Nwcy5yb290LXgxLmxldHNlbmNyeXB0Lm9yZzA8BgNVHR8ENTAz\nMDGgL6AthitodHRwOi8vY3JsLmlkZW50cnVzdC5jb20vRFNUUk9PVENBWDNDUkwu\nY3JsMB0GA1UdDgQWBBSoSmpjBH3duubRObemRWXv86jsoTANBgkqhkiG9w0BAQsF\nAAOCAQEA3TPXEfNjWDjdGBX7CVW+dla5cEilaUcne8IkCJLxWh9KEik3JHRRHGJo\nuM2VcGfl96S8TihRzZvoroed6ti6WqEBmtzw3Wodatg+VyOeph4EYpr/1wXKtx8/\nwApIvJSwtmVi4MFU5aMqrSDE6ea73Mj2tcMyo5jMd6jmeWUHK8so/joWUoHOUgwu\nX4Po1QYz+3dszkDqMp4fklxBwXRsW10KXzPMTZ+sOPAveyxindmjkW8lGy+QsRlG\nPfZ+G6Z6h7mjem0Y+iWlkYcV4PIWL1iwBi8saCbGS5jN2p8M+X+Q7UNKEkROb3N6\nKOqkqm57TH2H3eDJAkSnh6/DNFu0Qg==\n-----END CERTIFICATE-----\n']
+data.3.ssl.cipher.bits 	128
+data.3.ssl.cipher.name 	ECDHE-RSA-AES128-GCM-SHA256
+data.3.ssl.cipher.version 	TLSv1/SSLv3
+data.3.ssl.dhparams.bits 	2048
+data.3.ssl.dhparams.fingerprint 	RFC3526/Oakley Group 14
+data.3.ssl.dhparams.generator 	2
+data.3.ssl.dhparams.prime 	ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aacaa68ffffffffffffffff
+data.3.ssl.dhparams.public_key 	d7fe6e8c086d914f41ca6161c3e97ef251b066385c91d767385e9740ec0bd8212c01f80f30205709f39883f693a3eb454120e097f7bf61e19cf1b908ab2ded8bd841b531a38873e6710675ffa42b5699c6201b84b398a75ce60f8a43069dcd5209ce8aa683e2b22f2bdeeb957f90c4d8e1e35ce3efe91ded31d66f5fd6c1ecc888864ef405057881cdbb041295866a031166b1dc92007ade03902635b732255d2196eaeb33d35b0609ba671c9642e1699bff29dc6f7587261bfc1208d2f5d76726dbee128c3c4363668302b1eb22255a742bbee28fd80ea0ca793a4232d21672c52f15cba07c25878269ee4e36756c9a3819947284423c08d35bda34baf88669
+data.3.ssl.tlsext 	[{u'id': 65281, u'name': u'renegotiation_info'}, {u'id': 11, u'name': u'ec_point_formats'}, {u'id': 35, u'name': u'SessionTicket'}, {u'id': 15, u'name': u'heartbeat'}]
+data.3.ssl.versions 	['TLSv1', '-SSLv2', '-SSLv3', 'TLSv1.1', 'TLSv1.2']
+data.3.tags 	['cloud']
+data.3.timestamp 	2018-01-31T06:39:24.809740
+data.3.title 	Diamond House
+data.3.transport 	tcp
+data.3.version 	2.4.7
+dma_code 	807
+hostnames 	['webserver.sigweb.net.br']
+ip 	1760332919
+ip_str 	104.236.140.119
+isp 	Digital Ocean
+last_update 	2018-02-24T00:16:36.962757
+latitude 	37.7353
+longitude 	-122.3732
+org 	Digital Ocean
+os 	null
+ports 	[22, 80, 8001, 443]
+postal_code 	94124
+region_code 	CA
+tags 	['cloud']
+vulns 	['!CVE-2014-0160']
+
+
+
+segunda empresa comercial de San Francisco(Organization Chatango LLC) 
+
+
+208.93.229.16
+City
+San Francisco
+Country
+United States
+Organization
+Chatango LLC
+ISP
+Chatango LLC
+Last Update
+2018-02-24T00:17:17.304559
+ASN
+AS29893
+
+Ports 
+    • 22 80  443 
+Services 
+    • 22
+      tcp
+      ssh
+      SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.7
+      Key type: ssh-ed25519
+      Key: AAAAC3NzaC1lZDI1NTE5AAAAIMv7uIWfkHg4smTar2snT8tgZpVVBr249Pz0+l/W3COb
+      Fingerprint: b6:b7:7c:5a:46:20:ec:13:43:10:51:b8:42:0c:1c:67
+      
+      Kex Algorithms:
+              curve25519-sha256@libssh.org
+              ecdh-sha2-nistp256
+              ecdh-sha2-nistp384
+              ecdh-sha2-nistp521
+              diffie-hellman-group-exchange-sha256
+              diffie-hellman-group-exchange-sha1
+              diffie-hellman-group14-sha1
+              diffie-hellman-group1-sha1
+      
+      Server Host Key Algorithms:
+              ssh-rsa
+              ssh-dss
+              ecdsa-sha2-nistp256
+              ssh-ed25519
+      
+      Encryption Algorithms:
+              aes128-ctr
+              aes192-ctr
+              aes256-ctr
+              arcfour256
+              arcfour128
+              aes128-gcm@openssh.com
+              aes256-gcm@openssh.com
+              chacha20-poly1305@openssh.com
+              aes128-cbc
+              3des-cbc
+              blowfish-cbc
+              cast128-cbc
+              aes192-cbc
+              aes256-cbc
+              arcfour
+              rijndael-cbc@lysator.liu.se
+      
+      MAC Algorithms:
+              hmac-md5-etm@openssh.com
+              hmac-sha1-etm@openssh.com
+              umac-64-etm@openssh.com
+              umac-128-etm@openssh.com
+              hmac-sha2-256-etm@openssh.com
+              hmac-sha2-512-etm@openssh.com
+              hmac-ripemd160-etm@openssh.com
+              hmac-sha1-96-etm@openssh.com
+              hmac-md5-96-etm@openssh.com
+              hmac-md5
+              hmac-sha1
+              umac-64@openssh.com
+              umac-128@openssh.com
+              hmac-sha2-256
+              hmac-sha2-512
+              hmac-ripemd160
+              hmac-ripemd160@openssh.com
+              hmac-sha1-96
+              hmac-md5-96
+      
+      Compression Algorithms:
+              none
+              zlib@openssh.com
+      
+    • 80
+      tcp
+      http
+        
+              nginx
+      HTTP/1.1 403 Forbidden
+      Server: nginx
+      Date: Sat, 27 Jan 2018 11:29:41 GMT
+      Content-Type: text/html
+      Content-Length: 564
+      Connection: keep-alive
+      
+    • 443
+      tcp
+      https
+        
+              nginx
+      HTTP/1.1 403 Forbidden
+      Server: nginx
+      Date: Wed, 21 Feb 2018 03:36:35 GMT
+      Content-Type: text/html
+      Content-Length: 564
+      Connection: keep-alive
+      
+                  SSL Certificate
+      Certificate:
+          Data:
+              Version: 3 (0x2)
+              Serial Number:
+                  0c:25:5f:e5:b0:7b:4c:54:64:ae:ec:03:bf:6e:a7:a6
+          Signature Algorithm: sha256WithRSAEncryption
+              Issuer: C=GB, ST=Greater Manchester, L=Salford, O=COMODO CA Limited, CN=COMODO RSA Domain Validation Secure Server CA
+              Validity
+                  Not Before: Apr 25 00:00:00 2017 GMT
+                  Not After : May 18 23:59:59 2020 GMT
+              Subject: OU=Domain Control Validated, OU=PositiveSSL Wildcard, CN=*.chatango.com
+              Subject Public Key Info:
+                  Public Key Algorithm: rsaEncryption
+                      Public-Key: (2048 bit)
+                      Modulus:
+                          00:c1:99:e8:99:b2:e2:77:27:31:0a:12:46:c2:f3:
+                          fe:51:7e:86:cd:86:45:f1:0f:a3:40:b3:78:a4:4e:
+                          ff:9d:ee:11:18:6b:66:37:6c:47:30:db:4d:1d:72:
+                          43:d1:05:9a:b9:85:9b:8b:c6:85:ff:73:69:d2:5e:
+                          03:eb:74:ae:c3:54:48:3f:7b:f0:56:bb:55:88:01:
+                          2e:97:c1:43:2b:d3:7d:6c:09:8a:73:07:43:1d:3c:
+                          b8:2b:57:4d:73:7d:28:70:24:f2:14:df:f1:b7:0e:
+                          44:79:54:88:e8:4c:a3:ea:52:33:31:0f:05:cc:da:
+                          f9:c6:01:2c:2d:8d:9c:f5:d0:a7:6f:39:78:c1:82:
+                          b3:34:17:3c:16:f3:06:eb:1c:dd:5d:8d:a1:b2:0f:
+                          b1:e4:9b:fc:36:c7:de:f5:33:b4:db:a3:59:97:af:
+                          7f:09:d6:63:e5:78:a0:bc:03:0f:15:c3:30:6c:c2:
+                          67:f5:31:f6:cd:25:cb:1d:ce:b7:dc:24:3b:3b:64:
+                          dd:f0:72:ca:da:c7:18:57:ac:c2:5c:2d:45:e9:81:
+                          f8:a8:9f:0b:57:95:8c:5c:55:ab:da:6d:ef:42:10:
+                          71:b0:91:44:b4:56:66:d5:59:c8:a1:1f:53:54:32:
+                          29:d5:2a:73:dc:10:88:1f:f9:56:fb:bf:18:a9:1c:
+                          56:af
+                      Exponent: 65537 (0x10001)
+              X509v3 extensions:
+                  X509v3 Authority Key Identifier: 
+                      keyid:90:AF:6A:3A:94:5A:0B:D8:90:EA:12:56:73:DF:43:B4:3A:28:DA:E7
+      
+                  X509v3 Subject Key Identifier: 
+                      6A:7F:2F:E1:6B:56:81:09:51:86:50:12:60:99:15:7F:93:03:B6:67
+                  X509v3 Key Usage: critical
+                      Digital Signature, Key Encipherment
+                  X509v3 Basic Constraints: critical
+                      CA:FALSE
+                  X509v3 Extended Key Usage: 
+                      TLS Web Server Authentication, TLS Web Client Authentication
+                  X509v3 Certificate Policies: 
+                      Policy: 1.3.6.1.4.1.6449.1.2.2.7
+                        CPS: https://secure.comodo.com/CPS
+                      Policy: 2.23.140.1.2.1
+      
+                  X509v3 CRL Distribution Points: 
+      
+                      Full Name:
+                        URI:http://crl.comodoca.com/COMODORSADomainValidationSecureServerCA.crl
+      
+                  Authority Information Access: 
+                      CA Issuers - URI:http://crt.comodoca.com/COMODORSADomainValidationSecureServerCA.crt
+                      OCSP - URI:http://ocsp.comodoca.com
+      
+                  X509v3 Subject Alternative Name: 
+                      DNS:*.chatango.com, DNS:chatango.com
+          Signature Algorithm: sha256WithRSAEncryption
+               4a:76:c9:9b:ef:b5:6f:54:0c:ee:9e:05:9a:72:21:75:37:7d:
+               e5:a2:f2:08:54:ca:4c:71:49:2b:aa:b5:a7:d8:25:98:a0:7a:
+               f7:04:8c:d4:5d:ff:7f:ed:0c:3e:cd:45:0f:3f:e9:a6:92:ad:
+               e6:99:c9:a6:4c:9a:1b:ee:77:01:f6:cd:2e:dc:d9:62:6f:fe:
+               d8:07:fc:3a:85:3d:54:8d:80:c1:59:fe:c6:37:90:a3:52:ab:
+               e7:2b:65:c9:a2:0d:30:80:f3:23:0d:25:a7:39:0e:9b:3f:22:
+               64:87:44:09:6c:a8:cc:97:e3:9b:b8:c6:4b:63:0e:7f:7c:a7:
+               26:eb:3e:8a:e0:71:56:69:09:2a:95:1e:93:5a:fc:75:9b:82:
+               d1:c2:e3:71:b0:8b:e1:16:26:7a:b9:5e:29:de:fe:77:98:b6:
+               ad:9b:d3:44:be:a5:96:b3:50:d2:bf:2d:7a:e6:63:d4:43:a7:
+               6d:13:e8:17:7e:7a:37:c3:9c:4f:da:0a:83:09:a8:b7:a1:e6:
+               23:ab:0e:52:2c:ee:9d:bc:ba:75:5f:5b:25:c2:06:ce:4a:44:
+               8a:54:a3:d0:8c:ad:7a:76:30:e3:c8:ba:6c:2e:2d:87:98:53:
+               20:05:7b:17:64:e5:1f:4d:1a:23:39:00:6f:c4:00:67:56:f5:
+               3d:58:a1:72
+
+
+
+
+
+
+208.93.229.16
+
+Property Name 	Value
+area_code 	415
+asn 	AS29893
+city 	San Francisco
+country_code 	US
+country_code3 	USA
+country_name 	United States
+data.0._shodan.crawler 	6ff540e4d43ec69d8de2a7b60e1de2d9ddb406dc
+data.0._shodan.id 	null
+data.0._shodan.module 	ssh
+data.0.data 	SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.7 Key type: ssh-ed25519 Key: AAAAC3NzaC1lZDI1NTE5AAAAIMv7uIWfkHg4smTar2snT8tgZpVVBr249Pz0+l/W3COb Fingerprint: b6:b7:7c:5a:46:20:ec:13:43:10:51:b8:42:0c:1c:67 Kex Algorithms: curve25519-sha256@libssh.org ecdh-sha2-nistp256 ecdh-sha2-nistp384 ecdh-sha2-nistp521 diffie-hellman-group-exchange-sha256 diffie-hellman-group-exchange-sha1 diffie-hellman-group14-sha1 diffie-hellman-group1-sha1 Server Host Key Algorithms: ssh-rsa ssh-dss ecdsa-sha2-nistp256 ssh-ed25519 Encryption Algorithms: aes128-ctr aes192-ctr aes256-ctr arcfour256 arcfour128 aes128-gcm@openssh.com aes256-gcm@openssh.com chacha20-poly1305@openssh.com aes128-cbc 3des-cbc blowfish-cbc cast128-cbc aes192-cbc aes256-cbc arcfour rijndael-cbc@lysator.liu.se MAC Algorithms: hmac-md5-etm@openssh.com hmac-sha1-etm@openssh.com umac-64-etm@openssh.com umac-128-etm@openssh.com hmac-sha2-256-etm@openssh.com hmac-sha2-512-etm@openssh.com hmac-ripemd160-etm@openssh.com hmac-sha1-96-etm@openssh.com hmac-md5-96-etm@openssh.com hmac-md5 hmac-sha1 umac-64@openssh.com umac-128@openssh.com hmac-sha2-256 hmac-sha2-512 hmac-ripemd160 hmac-ripemd160@openssh.com hmac-sha1-96 hmac-md5-96 Compression Algorithms: none zlib@openssh.com
+data.0.domains 	[]
+data.0.hash 	-1945186941
+data.0.hostnames 	[]
+data.0.info 	protocol 2.0
+data.0.opts.ssh.cipher 	aes128-ctr
+data.0.opts.ssh.fingerprint 	b6:b7:7c:5a:46:20:ec:13:43:10:51:b8:42:0c:1c:67
+data.0.opts.ssh.kex.compression_algorithms 	['none', 'zlib@openssh.com']
+data.0.opts.ssh.kex.encryption_algorithms 	['aes128-ctr', 'aes192-ctr', 'aes256-ctr', 'arcfour256', 'arcfour128', 'aes128-gcm@openssh.com', 'aes256-gcm@openssh.com', 'chacha20-poly1305@openssh.com', 'aes128-cbc', '3des-cbc', 'blowfish-cbc', 'cast128-cbc', 'aes192-cbc', 'aes256-cbc', 'arcfour', 'rijndael-cbc@lysator.liu.se']
+data.0.opts.ssh.kex.kex_algorithms 	['curve25519-sha256@libssh.org', 'ecdh-sha2-nistp256', 'ecdh-sha2-nistp384', 'ecdh-sha2-nistp521', 'diffie-hellman-group-exchange-sha256', 'diffie-hellman-group-exchange-sha1', 'diffie-hellman-group14-sha1', 'diffie-hellman-group1-sha1']
+data.0.opts.ssh.kex.kex_follows 	False
+data.0.opts.ssh.kex.languages 	['']
+data.0.opts.ssh.kex.mac_algorithms 	['hmac-md5-etm@openssh.com', 'hmac-sha1-etm@openssh.com', 'umac-64-etm@openssh.com', 'umac-128-etm@openssh.com', 'hmac-sha2-256-etm@openssh.com', 'hmac-sha2-512-etm@openssh.com', 'hmac-ripemd160-etm@openssh.com', 'hmac-sha1-96-etm@openssh.com', 'hmac-md5-96-etm@openssh.com', 'hmac-md5', 'hmac-sha1', 'umac-64@openssh.com', 'umac-128@openssh.com', 'hmac-sha2-256', 'hmac-sha2-512', 'hmac-ripemd160', 'hmac-ripemd160@openssh.com', 'hmac-sha1-96', 'hmac-md5-96']
+data.0.opts.ssh.kex.server_host_key_algorithms 	['ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ssh-ed25519']
+data.0.opts.ssh.kex.unused 	0
+data.0.opts.ssh.key 	AAAAC3NzaC1lZDI1NTE5AAAAIMv7uIWfkHg4smTar2snT8tgZpVVBr249Pz0+l/W3COb
+data.0.opts.ssh.mac 	hmac-sha2-256
+data.0.opts.ssh.type 	ssh-ed25519
+data.0.port 	22
+data.0.ssh.cipher 	aes128-ctr
+data.0.ssh.fingerprint 	b6:b7:7c:5a:46:20:ec:13:43:10:51:b8:42:0c:1c:67
+data.0.ssh.kex.compression_algorithms 	['none', 'zlib@openssh.com']
+data.0.ssh.kex.encryption_algorithms 	['aes128-ctr', 'aes192-ctr', 'aes256-ctr', 'arcfour256', 'arcfour128', 'aes128-gcm@openssh.com', 'aes256-gcm@openssh.com', 'chacha20-poly1305@openssh.com', 'aes128-cbc', '3des-cbc', 'blowfish-cbc', 'cast128-cbc', 'aes192-cbc', 'aes256-cbc', 'arcfour', 'rijndael-cbc@lysator.liu.se']
+data.0.ssh.kex.kex_algorithms 	['curve25519-sha256@libssh.org', 'ecdh-sha2-nistp256', 'ecdh-sha2-nistp384', 'ecdh-sha2-nistp521', 'diffie-hellman-group-exchange-sha256', 'diffie-hellman-group-exchange-sha1', 'diffie-hellman-group14-sha1', 'diffie-hellman-group1-sha1']
+data.0.ssh.kex.kex_follows 	False
+data.0.ssh.kex.languages 	['']
+data.0.ssh.kex.mac_algorithms 	['hmac-md5-etm@openssh.com', 'hmac-sha1-etm@openssh.com', 'umac-64-etm@openssh.com', 'umac-128-etm@openssh.com', 'hmac-sha2-256-etm@openssh.com', 'hmac-sha2-512-etm@openssh.com', 'hmac-ripemd160-etm@openssh.com', 'hmac-sha1-96-etm@openssh.com', 'hmac-md5-96-etm@openssh.com', 'hmac-md5', 'hmac-sha1', 'umac-64@openssh.com', 'umac-128@openssh.com', 'hmac-sha2-256', 'hmac-sha2-512', 'hmac-ripemd160', 'hmac-ripemd160@openssh.com', 'hmac-sha1-96', 'hmac-md5-96']
+data.0.ssh.kex.server_host_key_algorithms 	['ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ssh-ed25519']
+data.0.ssh.kex.unused 	0
+data.0.ssh.key 	AAAAC3NzaC1lZDI1NTE5AAAAIMv7uIWfkHg4smTar2snT8tgZpVVBr249Pz0+l/W3COb
+data.0.ssh.mac 	hmac-sha2-256
+data.0.ssh.type 	ssh-ed25519
+data.0.timestamp 	2018-02-24T00:17:17.304559
+data.0.transport 	tcp
+data.1._shodan.crawler 	97b9d37f0484f45ce645307121c5c1ce0b3db578
+data.1._shodan.id 	3b79ea2b-c4e4-4397-a2c2-342afc609f83
+data.1._shodan.module 	https
+data.1.cpe 	['cpe:/a:igor_sysoev:nginx']
+data.1.data 	HTTP/1.1 403 Forbidden Server: nginx Date: Wed, 21 Feb 2018 03:36:35 GMT Content-Type: text/html Content-Length: 564 Connection: keep-alive
+data.1.domains 	[]
+data.1.hash 	381950207
+data.1.hostnames 	[]
+data.1.html 	<html> <head><title>403 Forbidden</title></head> <body bgcolor="white"> <center><h1>403 Forbidden</h1></center> <hr><center>nginx</center> </body> </html> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page -->
+data.1.http.favicon 	null
+data.1.http.host 	208.93.229.16
+data.1.http.html 	<html> <head><title>403 Forbidden</title></head> <body bgcolor="white"> <center><h1>403 Forbidden</h1></center> <hr><center>nginx</center> </body> </html> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page -->
+data.1.http.html_hash 	1965132531
+data.1.http.location 	/
+data.1.http.redirects 	[]
+data.1.http.robots 	null
+data.1.http.securitytxt 	null
+data.1.http.server 	nginx
+data.1.http.sitemap 	null
+data.1.http.title 	403 Forbidden
+data.1.link 	Ethernet or modem
+data.1.opts.heartbleed 	2018/02/20 19:36:39 208.93.229.16:443 - SAFE
+data.1.opts.vulns 	['!CVE-2014-0160']
+data.1.port 	443
+data.1.product 	nginx
+data.1.ssl.acceptable_cas 	[]
+data.1.ssl.alpn 	[]
+data.1.ssl.cert.expired 	False
+data.1.ssl.cert.expires 	20200518235959Z
+data.1.ssl.cert.extensions 	[{u'data': u'0\\x16\\x80\\x14\\x90\\xafj:\\x94Z\\x0b\\xd8\\x90\\xea\\x12Vs\\xdfC\\xb4:(\\xda\\xe7', u'name': u'authorityKeyIdentifier'}, {u'data': u'\\x04\\x14j\\x7f/\\xe1kV\\x81\\tQ\\x86P\\x12`\\x99\\x15\\x7f\\x93\\x03\\xb6g', u'name': u'subjectKeyIdentifier'}, {u'critical': True, u'data': u'\\x03\\x02\\x05\\xa0', u'name': u'keyUsage'}, {u'critical': True, u'data': u'0\\x00', u'name': u'basicConstraints'}, {u'data': u'0\\x14\\x06\\x08+\\x06\\x01\\x05\\x05\\x07\\x03\\x01\\x06\\x08+\\x06\\x01\\x05\\x05\\x07\\x03\\x02', u'name': u'extendedKeyUsage'}, {u'data': u'0F0:\\x06\\x0b+\\x06\\x01\\x04\\x01\\xb21\\x01\\x02\\x02\\x070+0)\\x06\\x08+\\x06\\x01\\x05\\x05\\x07\\x02\\x01\\x16\\x1dhttps://secure.comodo.com/CPS0\\x08\\x06\\x06g\\x81\\x0c\\x01\\x02\\x01', u'name': u'certificatePolicies'}, {u'data': u'0K0I\\xa0G\\xa0E\\x86Chttp://crl.comodoca.com/COMODORSADomainValidationSecureServerCA.crl', u'name': u'crlDistributionPoints'}, {u'data': u'0w0O\\x06\\x08+\\x06\\x01\\x05\\x05\\x070\\x02\\x86Chttp://crt.comodoca.com/COMODORSADomainValidationSecureServerCA.crt0$\\x06\\x08+\\x06\\x01\\x05\\x05\\x070\\x01\\x86\\x18http://ocsp.comodoca.com', u'name': u'authorityInfoAccess'}, {u'data': u'0\\x1e\\x82\\x0e*.chatango.com\\x82\\x0cchatango.com', u'name': u'subjectAltName'}]
+data.1.ssl.cert.fingerprint.sha1 	99a3b3053f64f23e9b51bd3d00a10a5f39d99b1c
+data.1.ssl.cert.fingerprint.sha256 	94abd7e973a87e794e9aa5010bf6206358726125a1e4b95468d3b35ec5a83f44
+data.1.ssl.cert.issued 	20170425000000Z
+data.1.ssl.cert.issuer.C 	GB
+data.1.ssl.cert.issuer.CN 	COMODO RSA Domain Validation Secure Server CA
+data.1.ssl.cert.issuer.L 	Salford
+data.1.ssl.cert.issuer.O 	COMODO CA Limited
+data.1.ssl.cert.issuer.ST 	Greater Manchester
+data.1.ssl.cert.pubkey.bits 	2048
+data.1.ssl.cert.pubkey.type 	rsa
+data.1.ssl.cert.serial 	16144795959964761833328424317252183974
+data.1.ssl.cert.sig_alg 	sha256WithRSAEncryption
+data.1.ssl.cert.subject.CN 	*.chatango.com
+data.1.ssl.cert.subject.OU 	PositiveSSL Wildcard
+data.1.ssl.cert.version 	2
+data.1.ssl.chain 	['-----BEGIN CERTIFICATE-----\nMIIFUTCCBDmgAwIBAgIQDCVf5bB7TFRkruwDv26npjANBgkqhkiG9w0BAQsFADCB\nkDELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4G\nA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxNjA0BgNV\nBAMTLUNPTU9ETyBSU0EgRG9tYWluIFZhbGlkYXRpb24gU2VjdXJlIFNlcnZlciBD\nQTAeFw0xNzA0MjUwMDAwMDBaFw0yMDA1MTgyMzU5NTlaMFsxITAfBgNVBAsTGERv\nbWFpbiBDb250cm9sIFZhbGlkYXRlZDEdMBsGA1UECxMUUG9zaXRpdmVTU0wgV2ls\nZGNhcmQxFzAVBgNVBAMMDiouY2hhdGFuZ28uY29tMIIBIjANBgkqhkiG9w0BAQEF\nAAOCAQ8AMIIBCgKCAQEAwZnombLidycxChJGwvP+UX6GzYZF8Q+jQLN4pE7/ne4R\nGGtmN2xHMNtNHXJD0QWauYWbi8aF/3Np0l4D63Suw1RIP3vwVrtViAEul8FDK9N9\nbAmKcwdDHTy4K1dNc30ocCTyFN/xtw5EeVSI6Eyj6lIzMQ8FzNr5xgEsLY2c9dCn\nbzl4wYKzNBc8FvMG6xzdXY2hsg+x5Jv8Nsfe9TO026NZl69/CdZj5XigvAMPFcMw\nbMJn9TH2zSXLHc633CQ7O2Td8HLK2scYV6zCXC1F6YH4qJ8LV5WMXFWr2m3vQhBx\nsJFEtFZm1VnIoR9TVDIp1Spz3BCIH/lW+78YqRxWrwIDAQABo4IB2TCCAdUwHwYD\nVR0jBBgwFoAUkK9qOpRaC9iQ6hJWc99DtDoo2ucwHQYDVR0OBBYEFGp/L+FrVoEJ\nUYZQEmCZFX+TA7ZnMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMB0GA1Ud\nJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjBPBgNVHSAESDBGMDoGCysGAQQBsjEB\nAgIHMCswKQYIKwYBBQUHAgEWHWh0dHBzOi8vc2VjdXJlLmNvbW9kby5jb20vQ1BT\nMAgGBmeBDAECATBUBgNVHR8ETTBLMEmgR6BFhkNodHRwOi8vY3JsLmNvbW9kb2Nh\nLmNvbS9DT01PRE9SU0FEb21haW5WYWxpZGF0aW9uU2VjdXJlU2VydmVyQ0EuY3Js\nMIGFBggrBgEFBQcBAQR5MHcwTwYIKwYBBQUHMAKGQ2h0dHA6Ly9jcnQuY29tb2Rv\nY2EuY29tL0NPTU9ET1JTQURvbWFpblZhbGlkYXRpb25TZWN1cmVTZXJ2ZXJDQS5j\ncnQwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9kb2NhLmNvbTAnBgNVHREE\nIDAegg4qLmNoYXRhbmdvLmNvbYIMY2hhdGFuZ28uY29tMA0GCSqGSIb3DQEBCwUA\nA4IBAQBKdsmb77VvVAzungWaciF1N33lovIIVMpMcUkrqrWn2CWYoHr3BIzUXf9/\n7Qw+zUUPP+mmkq3mmcmmTJob7ncB9s0u3Nlib/7YB/w6hT1UjYDBWf7GN5CjUqvn\nK2XJog0wgPMjDSWnOQ6bPyJkh0QJbKjMl+ObuMZLYw5/fKcm6z6K4HFWaQkqlR6T\nWvx1m4LRwuNxsIvhFiZ6uV4p3v53mLatm9NEvqWWs1DSvy165mPUQ6dtE+gXfno3\nw5xP2gqDCai3oeYjqw5SLO6dvLp1X1slwgbOSkSKVKPQjK16djDjyLpsLi2HmFMg\nBXsXZOUfTRojOQBvxABnVvU9WKFy\n-----END CERTIFICATE-----\n', '-----BEGIN CERTIFICATE-----\nMIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yMBzANBgkqhkiG9w0BAQwFADCB\nhTELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4G\nA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxKzApBgNV\nBAMTIkNPTU9ETyBSU0EgQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkwHhcNMTQwMjEy\nMDAwMDAwWhcNMjkwMjExMjM1OTU5WjCBkDELMAkGA1UEBhMCR0IxGzAZBgNVBAgT\nEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMR\nQ09NT0RPIENBIExpbWl0ZWQxNjA0BgNVBAMTLUNPTU9ETyBSU0EgRG9tYWluIFZh\nbGlkYXRpb24gU2VjdXJlIFNlcnZlciBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEP\nADCCAQoCggEBAI7CAhnhoFmk6zg1jSz9AdDTScBkxwtiBUUWOqigwAwCfx3M28Sh\nbXcDow+G+eMGnD4LgYqbSRutA776S9uMIO3Vzl5ljj4Nr0zCsLdFXlIvNN5IJGS0\nQa4Al/e+Z96e0HqnU4A7fK31llVvl0cKfIWLIpeNs4TgllfQcBhglo/uLQeTnaG6\nytHNe+nEKpooIZFNb5JPJaXyejXdJtxGpdCsWTWM/06RQ1A/WZMebFEh7lgUq/51\nUHg+TLAchhP6a5i84DuUHoVS3AOTJBhuyydRReZw3iVDpA3hSqXttn7IzW3uLh0n\nc13cRTCAquOyQQuvvUSH2rnlG51/ruWFgqUCAwEAAaOCAWUwggFhMB8GA1UdIwQY\nMBaAFLuvfgI9+qbxPISOre44mOzZMjLUMB0GA1UdDgQWBBSQr2o6lFoL2JDqElZz\n30O0Oija5zAOBgNVHQ8BAf8EBAMCAYYwEgYDVR0TAQH/BAgwBgEB/wIBADAdBgNV\nHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwGwYDVR0gBBQwEjAGBgRVHSAAMAgG\nBmeBDAECATBMBgNVHR8ERTBDMEGgP6A9hjtodHRwOi8vY3JsLmNvbW9kb2NhLmNv\nbS9DT01PRE9SU0FDZXJ0aWZpY2F0aW9uQXV0aG9yaXR5LmNybDBxBggrBgEFBQcB\nAQRlMGMwOwYIKwYBBQUHMAKGL2h0dHA6Ly9jcnQuY29tb2RvY2EuY29tL0NPTU9E\nT1JTQUFkZFRydXN0Q0EuY3J0MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5jb21v\nZG9jYS5jb20wDQYJKoZIhvcNAQEMBQADggIBAE4rdk+SHGI2ibp3wScF9BzWRJ2p\nmj6q1WZmAT7qSeaiNbz69t2Vjpk1mA42GHWx3d1Qcnyu3HeIzg/3kCDKo2cuH1Z/\ne+FE6kKVxF0NAVBGFfKBiVlsit2M8RKhjTpCipj4SzR7JzsItG8kO3KdY3RYPBps\nP0/HEZrIqPW1N+8QRcZs2eBelSaz662jue5/DJpmNXMyYE7l3YphLG5SEXdoltMY\ndVEVABt0iN3hxzgEQyjpFv3ZBdRdRydg1vs4O2xyopT4Qhrf7W8GjEXCBgCq5Ojc\n2bXhc3js9iPc0d1sjhqPpepUfJa3w/5Vjo1JXvxku88+vZbrac2/4EjxYoIQ5QxG\nV/Iz2tDIY+3GH5QFlkoakdH368+PUq4NCNk+qKBR6cGHdNXJ93SrLlP7u3r7l+L4\nHyaPs9Kg4DdbKDsx5Q5XLVq4rXmsXiBmGqW5prU5wfWYQ//u+aen/e7KJD2AFsQX\nj4rBYKEMrltDR5FL1ZoXX/nUh8HCjLfn4g8wGTeGrODcQgPmlKidrv0PJFGUzpII\n0fxQ8ANAe4hZ7Q7drNJ3gjTcBpUC2JD5Leo31Rpg0Gcg19hCC0Wvgmje3WYkN5Ap\nlBlGGSW4gNfL1IYoakRwJiNiqZ+Gb7+6kHDSVneFeO/qJakXzlByjAA6quPbYzSf\n+AZxAeKCINT+b72x\n-----END CERTIFICATE-----\n', '-----BEGIN CERTIFICATE-----\nMIIFdDCCBFygAwIBAgIQJ2buVutJ846r13Ci/ITeIjANBgkqhkiG9w0BAQwFADBv\nMQswCQYDVQQGEwJTRTEUMBIGA1UEChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFk\nZFRydXN0IEV4dGVybmFsIFRUUCBOZXR3b3JrMSIwIAYDVQQDExlBZGRUcnVzdCBF\neHRlcm5hbCBDQSBSb290MB4XDTAwMDUzMDEwNDgzOFoXDTIwMDUzMDEwNDgzOFow\ngYUxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAO\nBgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMSswKQYD\nVQQDEyJDT01PRE8gUlNBIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MIICIjANBgkq\nhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAkehUktIKVrGsDSTdxc9EZ3SZKzejfSNw\nAHG8U9/E+ioSj0t/EFa9n3Byt2F/yUsPF6c947AEYe7/EZfH9IY+Cvo+XPmT5jR6\n2RRr55yzhaCCenavcZDX7P0N+pxs+t+wgvQUfvm+xKYvT3+Zf7X8Z0NyvQwA1onr\nayzT7Y+YHBSrfuXjbvzYqOSSJNpDa2K4Vf3qwbxstovzDo2a5JtsaZn4eEgwRdWt\n4Q08RWD8MpZRJ7xnw8outmvqRsfHIKCxH2XeSAi6pE6p8oNGN4Tr6MyBSENnTnIq\nm1y9TBsoilwie7SrmNnu4FGDwwlGTm0+mfqVF9p8M1dBPI1R7Qu2XK8sYxrfV8g/\nvOldxJuvRZnio1oktLqpVj3Pb6r/SVi+8Kj/9Lit6Tf7urj0Czr56ENCHonYhMsT\n8dm74YlguIwoVqwUHZwK53Hrzw7dPamWoUi9PPevtQ0iTMARgexWO/bTouJbt7IE\nIlKVgJNp6I5MZfGRAy1wdALqi2cVKWlSArvX31BqVUa/oKMoYX9w0MOiqiwhqkfO\nKJwGRXa/ghgntNWutMtQ5mv0TIZxMOmm3xaG4Nj/QN370EKIf6MzOi5cHkERgWPO\nGHFrK+ymircxXDpqR+DDeVnWIBqv8mqYqnK8V0rSS527EPywTEHl7R09XiidnMy/\ns1Hap0flhFMCAwEAAaOB9DCB8TAfBgNVHSMEGDAWgBStvZh6NLQm9/rEJlTvA73g\nJMtUGjAdBgNVHQ4EFgQUu69+Aj36pvE8hI6t7jiY7NkyMtQwDgYDVR0PAQH/BAQD\nAgGGMA8GA1UdEwEB/wQFMAMBAf8wEQYDVR0gBAowCDAGBgRVHSAAMEQGA1UdHwQ9\nMDswOaA3oDWGM2h0dHA6Ly9jcmwudXNlcnRydXN0LmNvbS9BZGRUcnVzdEV4dGVy\nbmFsQ0FSb290LmNybDA1BggrBgEFBQcBAQQpMCcwJQYIKwYBBQUHMAGGGWh0dHA6\nLy9vY3NwLnVzZXJ0cnVzdC5jb20wDQYJKoZIhvcNAQEMBQADggEBAGS/g/FfmoXQ\nzbihKVcN6Fr30ek+8nYEbvFScLsePP9NDXRqzIGCJdPDoCpdTPW6i6FtxFQJdcfj\nJw5dhHk3QBN39bSsHNA7qxcS1u80GH4r6XnTq1dFDK8o+tDb5VCViLvfhVdpfZLY\nUspzgb8c8+a4bmYRBbMelC1/kZWSWfFMzqORcUx8Rww7Cxn2obFshj5cqsQugsv5\nB5a6SE2Q8pTIqXOi6wZ7I53eovNNVZ96YUWYGGjHXkBrI/V5eu+MtWuLt29G9Hvx\nPUsE2JOAWVrgQSQdso8VYFhH2+9uRv0V9dlfmrPb2LjkQLPNlzmuhbsdjrzch5vR\npu/xO28QOG8=\n-----END CERTIFICATE-----\n', '-----BEGIN CERTIFICATE-----\nMIIENjCCAx6gAwIBAgIBATANBgkqhkiG9w0BAQUFADBvMQswCQYDVQQGEwJTRTEU\nMBIGA1UEChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFkZFRydXN0IEV4dGVybmFs\nIFRUUCBOZXR3b3JrMSIwIAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBSb290\nMB4XDTAwMDUzMDEwNDgzOFoXDTIwMDUzMDEwNDgzOFowbzELMAkGA1UEBhMCU0Ux\nFDASBgNVBAoTC0FkZFRydXN0IEFCMSYwJAYDVQQLEx1BZGRUcnVzdCBFeHRlcm5h\nbCBUVFAgTmV0d29yazEiMCAGA1UEAxMZQWRkVHJ1c3QgRXh0ZXJuYWwgQ0EgUm9v\ndDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALf3GjPm8gAELTngTlvt\nH7xsD821+iO2zt6bETOXpClMfZOfvUq8k+0DGuOPz+VtUFrWlymUWoCwSXrbLpX9\nuMq/NzgtHj6RQa1wVsfwTz/oMp50ysiQVOnGXw94nZpAPA6sYapeFI+eh6FqUNzX\nmk6vBbOmcZSccbNQYArHE504B4YCqOmoaSYYkKtMsE8jqzpPhNjfzp/haW+710LX\na0Tkx63ubUFfclpxCDezeWWkWaCUN/cALw3CknLa0Dhy2xSoRcRdKn23tNbE7qzN\nE0S3ySvdQwAl+mG5aWpYIxG3pzOPVnVZ9c0p10a3CitlttNCbxWyuHv77+ldU9U0\nWicCAwEAAaOB3DCB2TAdBgNVHQ4EFgQUrb2YejS0Jvf6xCZU7wO94CTLVBowCwYD\nVR0PBAQDAgEGMA8GA1UdEwEB/wQFMAMBAf8wgZkGA1UdIwSBkTCBjoAUrb2YejS0\nJvf6xCZU7wO94CTLVBqhc6RxMG8xCzAJBgNVBAYTAlNFMRQwEgYDVQQKEwtBZGRU\ncnVzdCBBQjEmMCQGA1UECxMdQWRkVHJ1c3QgRXh0ZXJuYWwgVFRQIE5ldHdvcmsx\nIjAgBgNVBAMTGUFkZFRydXN0IEV4dGVybmFsIENBIFJvb3SCAQEwDQYJKoZIhvcN\nAQEFBQADggEBALCb4IUlwtYj4g+WBpKdQZic2YR5gdkeWxQHIzZlj7DYd7usQWxH\nYINRsPkyPef89iYTx4AWpb9a/IfPeHmJIZriTAcKhjW88t5RxNKWt9x+Tu5w/Rw5\n6wwCURQtjr0W4MHfRnXnJK3s9EK0hZNwEGe6nQY1ShjTK3rMUUKhemPR5ruhxSvC\nNr4TDea9Y355e6cJDUCrat2PisP29owaQgVR1EX1n6diIWgVIEM8med8vSTYqZEX\nc4g/VhsxOBi0cQ+azcgOno4uG+GMmIPLHzHxREzGBHNJdmAPx/i9F4BrLunMTA5a\nmnkPIAou1Z5jJh5VkpTYghdae9C8x49OhgQ=\n-----END CERTIFICATE-----\n']
+data.1.ssl.cipher.bits 	256
+data.1.ssl.cipher.name 	ECDHE-RSA-AES256-GCM-SHA384
+data.1.ssl.cipher.version 	TLSv1/SSLv3
+data.1.ssl.dhparams.bits 	1024
+data.1.ssl.dhparams.fingerprint 	nginx/Hardcoded 1024-bit prime
+data.1.ssl.dhparams.generator 	2
+data.1.ssl.dhparams.prime 	bbbc2dcad84674907c43fcf580e9cfdbd958a3f568b42d4b08eed4eb0fb3504c6c030276e710800c5ccbbaa8922614c5beeca565a5fdf1d287a2bc049be6778060e91a92a757e3048f68b076f7d36cc8f29ba5df81dc2ca725ece66270cc9a5035d8ceceef9ea0274a63ab1e58fafd4988d0f65d146757da071df045cfe16b9b
+data.1.ssl.dhparams.public_key 	53a3a574f25e751672ac28171b01744654cf9e5fe0c9aa55cfaec29f61284371ade1660ca0b5740a11d918c2b88717c470965713bccfe549483c94bc3a9f088b6e791d65fc542a53c8318631f836d64bd50588953e275ad51f65956f7e187b0e7fc8999b273e03b415a4b56106a8953bd4fa2e91ce3d7a73da7a037bcca365b7
+data.1.ssl.tlsext 	[{u'id': 65281, u'name': u'renegotiation_info'}, {u'id': 11, u'name': u'ec_point_formats'}, {u'id': 35, u'name': u'SessionTicket'}, {u'id': 15, u'name': u'heartbeat'}]
+data.1.ssl.versions 	['TLSv1', '-SSLv2', 'SSLv3', 'TLSv1.1', 'TLSv1.2']
+data.1.timestamp 	2018-02-21T03:36:35.636270
+data.1.title 	403 Forbidden
+data.1.transport 	tcp
+data.1.uptime 	3840
+data.2._shodan.crawler 	f7946cbe2dc20c40fcbcb81ad90aa01731b690ab
+data.2._shodan.id 	7eb62dc2-4f87-46ae-9fcb-b55670f7b702
+data.2._shodan.module 	http
+data.2.cpe 	['cpe:/a:igor_sysoev:nginx']
+data.2.data 	HTTP/1.1 403 Forbidden Server: nginx Date: Sat, 27 Jan 2018 11:29:41 GMT Content-Type: text/html Content-Length: 564 Connection: keep-alive
+data.2.deprecated.html.eol 	2016-12-31
+data.2.deprecated.html.new 	http.html
+data.2.deprecated.title.eol 	2016-12-31
+data.2.deprecated.title.new 	http.title
+data.2.domains 	[]
+data.2.hash 	-1898670159
+data.2.hostnames 	[]
+data.2.html 	<html> <head><title>403 Forbidden</title></head> <body bgcolor="white"> <center><h1>403 Forbidden</h1></center> <hr><center>nginx</center> </body> </html> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page -->
+data.2.http.favicon 	null
+data.2.http.host 	208.93.229.16
+data.2.http.html 	<html> <head><title>403 Forbidden</title></head> <body bgcolor="white"> <center><h1>403 Forbidden</h1></center> <hr><center>nginx</center> </body> </html> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page --> <!-- a padding to disable MSIE and Chrome friendly error page -->
+data.2.http.html_hash 	1965132531
+data.2.http.location 	/
+data.2.http.redirects 	[]
+data.2.http.robots 	null
+data.2.http.server 	nginx
+data.2.http.sitemap 	null
+data.2.http.title 	403 Forbidden
+data.2.link 	Ethernet or modem
+data.2.port 	80
+data.2.product 	nginx
+data.2.timestamp 	2018-01-27T11:29:41.873661
+data.2.title 	403 Forbidden
+data.2.transport 	tcp
+data.2.uptime 	287
+dma_code 	807
+hostnames 	[]
+ip 	3495814416
+ip_str 	208.93.229.16
+isp 	Chatango LLC
+last_update 	2018-02-24T00:17:17.304559
+latitude 	37.7691
+longitude 	-122.4449
+org 	Chatango LLC
+os 	null
+ports 	[22, 443, 80]
+postal_code 	94117
+region_code 	CA
+tags 	[]
+vulns 	['!CVE-2014-0160']
+
+
+2.Indique o software e versão utilizada pelos servidores ssh.  
+
+R: as duas impresas usam o mesmo sufware e da mesma versão  no OpenSSL 1.0.1  
+
+3.Qual dessas versões de software tem mais vulnerabilidades?  
+
+R: como usam o mesmo software as duas apresentaram apenas uma vulnerabilidade 
+
+4.E qual tem a vulnerabilidade mais grave (de acordo com o CVSS score identificado no CVE details)?  
+
+R: gravidade é a mesma porque as duas usam o mesmo software com a mesma vulnerabilidade. 
+
+5.Para efeitos práticos, a vulnerabilidade indicada no ponto anterior é grave? Porquê?  
+
+R: a vulnerabilidade foi identificado pelo MITRE CVE-2014-0160, é grave  Porque não manipulam corretamente os pacotes Heartbeat Extension, o que permite que os invasores remotos obtenham informações confidenciais da memória do processo através de pacotes criados que desencadeiam uma leitura excessiva do buffer, como demonstrado pela leitura 
+
+ de chaves privadas, relacionadas a d1_both.c e t1_lib.c, também 
+
+ conhecido como o erro Heartbleed. Esta vulnerabilidade foi modificada desde a última análise pelo NVD. Está aguardando uma reanálise que pode resultar em novas mudanças nas informações fornecidas.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
