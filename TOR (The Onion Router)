@@ -1,0 +1,67 @@
+user@CSI:~$ sudo apt-get install tor secure-delete curl
+[sudo] password for user: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+secure-delete is already the newest version (3.1-6).
+curl is already the newest version (7.52.1-5+deb9u4).
+tor is already the newest version (0.2.9.14-1).
+0 upgraded, 0 newly installed, 0 to remove and 29 not upgraded.
+user@CSI:~$ cd ~/Tools
+user@CSI:~/Tools$ git clone https://github.com/Und3rf10w/kali-anonsurf.git
+fatal: destination path 'kali-anonsurf' already exists and is not an empty directory.
+user@CSI:~/Tools$ cd kali-anonsurf
+user@CSI:~/Tools/kali-anonsurf$ sudo ./installer.sh
+--2018-03-05 07:24:04--  https://geti2p.net/_static/i2p-debian-repo.key.asc
+Resolving geti2p.net (geti2p.net)... 91.143.92.136, 2a02:180:a:65:2456:6542:1101:1010
+Connecting to geti2p.net (geti2p.net)|91.143.92.136|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 15200 (15K) [text/plain]
+Saving to: ‘/tmp/i2p-debian-repo.key.asc’
+
+/tmp/i2p-debian-rep 100%[===================>]  14.84K  64.6KB/s    in 0.2s    
+
+2018-03-05 07:24:05 (64.6 KB/s) - ‘/tmp/i2p-debian-repo.key.asc’ saved [15200/15200]
+
+OK
+Ign:1 http://ftp.pt.debian.org/debian stretch InRelease
+Hit:2 http://ftp.pt.debian.org/debian stretch-updates InRelease                
+Hit:3 http://deb.i2p2.no unstable InRelease                                    
+Hit:4 http://deb.debian.org/debian stretch-backports InRelease                 
+Hit:5 http://ftp.pt.debian.org/debian stretch Release                          
+Hit:6 http://ppa.launchpad.net/webupd8team/java/ubuntu bionic InRelease  
+Hit:7 http://security.debian.org/debian-security stretch/updates InRelease
+Reading package lists... Done
+E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)
+E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?
+E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)
+E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?
+dpkg-deb: building package 'kali-anonsurf' in 'kali-anonsurf.deb'.
+dpkg: error: dpkg status database is locked by another process
+E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)
+E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?
+
+Vamos utilizar o TOR para mudarmos a nossa localização geográfica.
+
+
+Your IP Address is 193.137.92.22
+[ Hide your IP ]
+Your IP Details
+ISP:Fundacao para a Ciencia e a Tecnologia, I.P.
+City: Braga
+Region: Braga
+Country:Portugal
+Postal Code: 4700-000
+
+Your IP Address is 185.100.86.182
+[ Hide your IP ]
+Your IP Details
+ISP: Flokinet Ltd
+City: Helsinki
+Region:Uusimaa
+Country:Finland
+Postal Code:
+
+
+
+
