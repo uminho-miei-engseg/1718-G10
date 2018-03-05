@@ -64,4 +64,14 @@ Postal Code:
 
 1.1-Não.
 Porque o protocolo TOR tem a caracteristica de ofuscação a localização, dando um indereço de IP 
-deferente em função do pais, cidade e região
+deferente em função do pais, cidade e região.
+
+P 1.2
+A existência de 6 routers intermédios e de 7 saltos, deve-se à existência dos chamados rendezvous points. QSe um servidor 
+precisar anunciar os seus serviços, deve escolher os introduction Points, e anuncia-os ao Directory 
+Server. As ligações compreendem 3 ORs intermediários.
+Deste modo, os intervenientes no processo da comunocação,comunicam através de uma rede composta pela escolha de ambos, o 
+que prefaz um total de 6 routers intermédios e 7 saltos.
+O motivo de apenas ser possível obter informação relativa à 3 servidores intermédios, deve-se ao facto de que o utilizador apenas
+tem conhecimento sobre as 3 máquinas adjacentes à sua, que servirão para realizar a comunicação entre os intervenientes para 
+saber os outros 3 seria necessário ter acesso à máquina na qual se encontra o servidor. 
