@@ -1,0 +1,682 @@
+Experiência 1.1
+
+R: O segmento que contém o código onde se encontram as instruções executáveis do programa têm o mesmo código máquina, que é igual a 521. O segmento que contém as variáveis glóbais e estáticas inicializadas pelo programador para os programas size1,2 e 3 são todas iguais a int i = =524. E para os programas size4 e size5 são iguais a int i = 548 e int i = 552, respectivamente. O segmento que as variáveis glóbais e estáticas não inicializadas para os programas size1, 2 e 5 são iguais a 8, enquanto que do programa size3 é igual a 16 e do programa size4 é igual a 12. Conforme os resultados abaixo:
+ 
+/Aulas/Aula10$ size size1
+   text	   data	    bss	    dec	    hex	filename
+   1521	    544	      8	   2073	    819	size1
+:~/Aulas/Aula10$ size size2
+   text	   data	    bss	    dec	    hex	filename
+   1521	    544	      8	   2073	    819	size2
+~/Aulas/Aula10$ size size3
+   text	   data	    bss	    dec	    hex	filename
+   1521	    544	     16	   2081	    821	size3
+~/Aulas/Aula10$ size size4
+   text	   data	    bss	    dec	    hex	filename
+   1521	    548	     12	   2081	    821	size4
+~/Aulas/Aula10$ size size5
+   text	   data	    bss	    dec	    hex	filename
+   1521	    552	      8	   2081	    821	size5
+
+Experiência 1.2
+
+R: Os valores dos segmentos text, data e bss do programa size memorylayout são completamente diferentes em relação aos 5 anteriores, istoé:
+
+~/Aulas/Aula10$ size memorylayout
+   text	   data	    bss	    dec	    hex	filename
+   2535	    624	     16	   3175	    c67	memorylayout
+
+Experiência 1.3
+
+R: A execussão do programa nas três linguagens resulta que: no Java o valor de i varia automáticamente de 0 à 9, em python também varia de 0 à 10 e em C++ os valores de i variam ilimitadamente de 7 à 10.
+
+user@CSI:~/Aulas/Aula10$ java LOverflow
+i = 0
+i = 1
+i = 2
+i = 3
+i = 4
+i = 5
+i = 6
+i = 7
+i = 8
+i = 9
+
+user@CSI:~/Aulas/Aula10$ python LOverflow.py
+i = 0
+i = 1
+i = 2
+i = 3
+i = 4
+i = 5
+i = 6
+i = 7
+i = 8
+i = 9
+i = 10
+
+Pergunta 1.1
+
+R: A execussão do programa LOverflow2 nas três linguagens, começa por questionar a quantidade de números. Em Java e em C++ a quantidade de números seleccionados, será a mesma a ser introduzida. Mas, para o python introduz-se menos 1 número.
+
+user@CSI:~/Aulas/Aula10$ java LOverflow2
+Quantos números? 6
+Introduza número: 0
+Introduza número: 1
+Introduza número: 2
+Introduza número: 3
+Introduza número: 4
+Introduza número: 5
+
+user@CSI:~/Aulas/Aula10$ python LOverflow2.py
+Quantos numeros? 4
+Insira numero: 0
+Insira numero: 1
+Insira numero: 2
+
+user@CSI:~/Aulas/Aula10$ ./LOverflow2
+Quantos números? 8
+Insira número: 0
+Insira número: 1
+Insira número: 2
+Insira número: 3
+Insira número: 4
+Insira número: 5
+Insira número: 6
+Insira número: 7
+
+Pergunta 1.2
+
+R: O programa LOverflow3 nas três linguagens, inicialmente introduzimos a quantidade de valores a guardar no array e o valor que desejamos recupaerar e é o programa sorteia automáticamente um valor.
+
+user@CSI:~/Aulas/Aula10$ java LOverflow3
+Quantos valores quer guardar no array? 
+5
+Que valor deseja recuperar? 
+0
+O valor é 5
+
+user@CSI:~/Aulas/Aula10$ python LOverflow3.py
+Quantos valores quer guardar no array? 7
+Que valor deseja recuperar? 5
+O valor e  2
+
+user@CSI:~/Aulas/Aula10$ ./LOverflow3
+Quantos valores quer guardar no array? 8
+Que valor deseja recuperar? 5
+O valor é 3
+
+Experiência 1.4
+
+R: Relativamente às temperaturas 30.0 30.1 30.2 30.3 30.4 30.5 30.6 20.7 30.8 30.9, tanto em Java e em Python o programa lê 10 temperaturas e para o outro caso, lê 12 temperaturas. 
+
+Pergunta 1.3
+
+R: No ficheiro RootExploit.c a vulnerabilidade de buffer overflow existe porque a função gets não valida o tamanho do input. Por essa razão, é possível escrever na variável pass caso se insira um input com tamanho superior a 4. Como para obter as confirmação das permissões de root basta que a variável pass tenha uma valor diferente de 0, basta inserir uma string com 5 caracteres. No ficheiro 0-simple.c a vulnerabilidade existe e é explorada pelas mesmas razões do exemplo anterior, no entanto, o tamanho do input necessário para explorar a vulnerabilidade tem que ser superior em mais do que uma unidade ao tamanho do buffer. Este facto pode estar relacionado com o alinhamento de memória forçado pelo compilador.
+
+Pergunta 1.4
+
+R: Os valores dos segmntos text, data, bss são: 2346	    640	     16, respectivamente.
+
+Pergunta 1.5
+
+R: Os valores dos segmntos text, data, bss são: 608	     16	   2656, respectivamente.Sim já ouvi falar de little-endian e big-endian. Dependendo da máquina que se usa, tem de se considerar a ordem pela qual os números constituídos por múltiplos bytes estão armazenados. As ordem são duas: big endian e little endian.
+Big Endian:
+Significa que o byte de ordem mais elevada do número está armazenado no endereço de memória mais baixo e de ordem mais baixa, no endereço mais elevado.
+Os processadores Motorola (dos Mac’s) usam ordem de byte Big Endian.
+Little Endian:
+Significa que o byte de ordem mais baixa do número está armazenado no endereço de memória mais baixo e de ordem mais elevada, no endereço mais elevado.
+Os processadores Intel (dos PC’s) usam ordem de byte Little Endian.
+explicado em IDT (2000).
+
+Pergunta P1.6: 
+
+Compile e execute o programa 2-functions.c, e obtenha a mensagem de "Congratulations" no ecrã. Notas:
+
+user@CSI:~/Aulas/Aula10$ gcc -o 2-functions 2-functions.c
+2-functions.c: In function ‘main’:
+2-functions.c:23:3: warning: implicit declaration of function ‘gets’ [-Wimplicit-function-declaration]
+   gets(buffer);
+   ^~~~
+/tmp/ccfr4Jtr.o: In function `main':
+2-functions.c:(.text+0x43): warning: the `gets' function is dangerous and should not be used.
+
+    relembre que o nome de uma função em C equivale ao endereço onde esta é escrita em memória;
+    poderá fp ser win?
+
+Indique os passos que efetuou para explorar a vulnerabilidade.
+
+Pergunta P1.7
+
+Compile e execute o programa 3-return.c, e obtenha a mensagem de "Congratulations" no ecrã. Notas:
+
+Indique os passos que efetuou para explorar a vulnerabilidade.
+
+
+user@CSI:~/Aulas/Aula10$ gcc -o 3-return 3-return.c
+3-return.c: In function ‘main’:
+3-return.c:20:3: warning: implicit declaration of function ‘gets’ [-Wimplicit-function-declaration]
+   gets(buffer);
+   ^~~~
+/tmp/ccfJPaXu.o: In function `main':
+3-return.c:(.text+0x3b): warning: the `gets' function is dangerous and should not be used.
+
+
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+i = 7
+i = 8
+i = 9
+i = 10
+
+
+
+
+
+
+
