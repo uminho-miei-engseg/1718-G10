@@ -1,0 +1,101 @@
+
+Pergunta P1.1
+
+Analise o programa overflow.c.
+
+1.1.1-Qual a vulnerabilidade que existe na função vulneravel() e quais os efeitos da mesma?
+
+vulnerabilidade overflow ela ocorre quando os dados forem demasiado grandes é pode ser escrita fora de menoria alocada para o efeito, então para que isso não ocorra nesta função os argumentos "size_t x", "size_t y" não devem ser demasiados grandes,
+
+1.1.2-Complete o main() de modo a demonstrar essa vulnerabilidade.
+main() {char *mat;
+size_t x = 134432784834729562724;
+size_t y = 284993626722638574723;
+char valor = ’a’;
+vulneravel(mat,x, y, valor);
+return 0;
+}
+
+1.1.3-Ao executar dá algum erro? Qual?
+
+overflow.c: In function ‘main’:
+overflow.c:17:14: error: stray ‘\342’ in program
+ char valor = ���a’;
+              ^
+overflow.c:17:15: error: stray ‘\200’ in program
+ char valor = ���a’;
+               ^
+overflow.c:17:16: error: stray ‘\231’ in program
+ char valor = ���a’;
+                ^
+overflow.c:17:18: error: stray ‘\342’ in program
+ char valor = ’a���;
+                  ^
+overflow.c:17:19: error: stray ‘\200’ in program
+ char valor = ’a���;
+                   ^
+overflow.c:17:20: error: stray ‘\231’ in program
+ char valor = ’a���;
+                    ^
+overflow.c:17:17: error: ‘a’ undeclared (first use in this function)
+ char valor = ’a’;
+                 ^
+overflow.c:17:17: note: each undeclared identifier is reported only once for each function it appears in
+overflow.c: At top level:
+overflow.c:21:1: error: expected identifier or ‘(’ before ‘}’ token
+ }
+ ^
+
+Pergunta P1.2
+
+Analise o programa underflow.c.
+
+1.2.1- Qual a vulnerabilidade que existe na função vulneravel() e quais os efeitos da mesma?
+
+A vulnerabilidade que existe está relacionada o argumento "size_t tamanho" da função vulnerave, nesta função limita-se o valor do argumento que tem ser menor que "MAX_SIZE".
+
+1.2.2-Complete o main() de modo a demonstrar essa vulnerabilidade.
+
+int main() {
+char *o;
+size_t tamanho=98765432123456789987654;
+vulneravel(o,tamanho);
+return 0;
+}
+
+1.2.3-Ao executar dá algum erro? Qual?
+
+user@CSI:~/Aulas/Aula11$ gcc underflow.c -g -o underflow
+underflow.c: In function ‘main’:
+underflow.c:20:16: warning: integer constant is too large for its type
+ size_t tamanho=98765432123456789987654;
+                ^~~~~~~~~~~~~~~~~~~~~~~
+underflow.c: At top level:
+underflow.c:24:1: error: expected identifier or ‘(’ before ‘}’ token
+ }
+
+Pergunta P1.3
+
+Analise o programa erro_sinal.c.
+
+1.3.1-Qual a vulnerabilidade que existe na função vulneravel() e quais os efeitos da mesma?
+
+A vulnerabilidade está também relacionada o argumento "size_t tamanho" da função vulnerave, ela tem um limite inferior e um superior o argumento da função tem de ser maior que 1 e menor que "MAX_SIZE".
+
+1.3.2-Complete o main() de modo a demonstrar essa vulnerabilidade.
+
+int main() {char *o;
+size_t tamanho=9977565533561024327592302;
+vulneravel(o,tamanho);
+return 0;
+}
+
+
+1.3.3-Ao executar dá algum erro? Qual?
+
+user@CSI:~/Aulas/Aula11$ gcc erro_sinal.c -g -o erro_sinal
+erro_sinal.c: In function ‘main’:
+erro_sinal.c:21:16: warning: integer constant is too large for its type
+ size_t tamanho=9977565533561024327592302;
+                ^~~~~~~~~~~~~~~~~~~~~~~~~
+
