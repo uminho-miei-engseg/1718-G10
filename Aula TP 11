@@ -5,7 +5,7 @@ Analise o programa overflow.c.
 
 1.1.1-Qual a vulnerabilidade que existe na função vulneravel() e quais os efeitos da mesma?
 
-vulnerabilidade overflow ela ocorre quando os dados forem demasiado grandes é pode ser escrita fora de menoria alocada para o efeito, então para que isso não ocorra nesta função os argumentos "size_t x", "size_t y" não devem ser demasiados grandes,
+vulnerabilidade overflow ela ocorre quando os dados forem demasiado grandes é pode ser escrita fora do espaço alocado da memória, então para que isso não ocorra nesta função os argumentos "size_t x", "size_t y" não devem ser demasiados grandes,
 
 1.1.2-Complete o main() de modo a demonstrar essa vulnerabilidade.
 main() {char *mat;
